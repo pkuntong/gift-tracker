@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="375" height="812" viewBox="0 0 375 812" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="375" height="812" fill="#F3F4F6"/>
+  
+  <!-- Status Bar -->
+  <rect width="375" height="44" fill="#4F46E5"/>
+  <text x="187.5" y="28" font-family="Arial" font-size="14" fill="white" text-anchor="middle">9:41</text>
+  
+  <!-- Header -->
+  <rect x="0" y="44" width="375" height="60" fill="white"/>
+  <text x="20" y="82" font-family="Arial" font-size="20" font-weight="bold" fill="#111827">Events</text>
+  <circle cx="335" cy="74" r="20" fill="#4F46E5"/>
+  <text x="335" y="81" font-family="Arial" font-size="20" fill="white" text-anchor="middle">+</text>
+  
+  <!-- Calendar -->
+  <rect x="20" y="124" width="335" height="100" rx="8" fill="white"/>
+  <text x="187.5" y="150" font-family="Arial" font-size="16" font-weight="bold" fill="#111827" text-anchor="middle">December 2023</text>
+  <!-- Calendar Grid -->
+  <g transform="translate(20, 160)">
+    <!-- Week days -->
+    <text x="0" y="0" font-family="Arial" font-size="12" fill="#6B7280" text-anchor="middle">S</text>
+    <text x="47.85" y="0" font-family="Arial" font-size="12" fill="#6B7280" text-anchor="middle">M</text>
+    <text x="95.7" y="0" font-family="Arial" font-size="12" fill="#6B7280" text-anchor="middle">T</text>
+    <text x="143.55" y="0" font-family="Arial" font-size="12" fill="#6B7280" text-anchor="middle">W</text>
+    <text x="191.4" y="0" font-family="Arial" font-size="12" fill="#6B7280" text-anchor="middle">T</text>
+    <text x="239.25" y="0" font-family="Arial" font-size="12" fill="#6B7280" text-anchor="middle">F</text>
+    <text x="287.1" y="0" font-family="Arial" font-size="12" fill="#6B7280" text-anchor="middle">S</text>
+    
+    <!-- Selected date -->
+    <circle cx="287.1" cy="30" r="15" fill="#4F46E5"/>
+    <text x="287.1" y="35" font-family="Arial" font-size="12" fill="white" text-anchor="middle">15</text>
+  </g>
+  
+  <!-- Upcoming Events -->
+  <text x="20" y="264" font-family="Arial" font-size="18" font-weight="bold" fill="#111827">Upcoming Events</text>
+  
+  <!-- Event Cards -->
+  <g transform="translate(20, 284)">
+    <!-- Event 1 -->
+    <rect width="335" height="80" rx="8" fill="white"/>
+    <text x="15" y="25" font-family="Arial" font-size="16" font-weight="bold" fill="#111827">Christmas</text>
+    <text x="15" y="50" font-family="Arial" font-size="14" fill="#6B7280">December 25, 2023</text>
+    <text x="15" y="70" font-family="Arial" font-size="14" fill="#6B7280">3 gift ideas</text>
+    
+    <!-- Event 2 -->
+    <rect y="100" width="335" height="80" rx="8" fill="white"/>
+    <text x="15" y="125" font-family="Arial" font-size="16" font-weight="bold" fill="#111827">Mom's Birthday</text>
+    <text x="15" y="150" font-family="Arial" font-size="14" fill="#6B7280">January 15, 2024</text>
+    <text x="15" y="170" font-family="Arial" font-size="14" fill="#6B7280">2 gift ideas</text>
+    
+    <!-- Event 3 -->
+    <rect y="200" width="335" height="80" rx="8" fill="white"/>
+    <text x="15" y="225" font-family="Arial" font-size="16" font-weight="bold" fill="#111827">Valentine's Day</text>
+    <text x="15" y="250" font-family="Arial" font-size="14" fill="#6B7280">February 14, 2024</text>
+    <text x="15" y="270" font-family="Arial" font-size="14" fill="#6B7280">1 gift idea</text>
+  </g>
+  
+  <!-- Bottom Navigation -->
+  <rect x="0" y="752" width="375" height="60" fill="white"/>
+  <g transform="translate(37.5, 772)">
+    <circle cx="0" cy="0" r="4" fill="#9CA3AF"/>
+    <text x="0" y="20" font-family="Arial" font-size="10" fill="#9CA3AF" text-anchor="middle">Home</text>
+  </g>
+  <g transform="translate(112.5, 772)">
+    <circle cx="0" cy="0" r="4" fill="#9CA3AF"/>
+    <text x="0" y="20" font-family="Arial" font-size="10" fill="#9CA3AF" text-anchor="middle">Gifts</text>
+  </g>
+  <g transform="translate(187.5, 772)">
+    <circle cx="0" cy="0" r="4" fill="#4F46E5"/>
+    <text x="0" y="20" font-family="Arial" font-size="10" fill="#4F46E5" text-anchor="middle">Events</text>
+  </g>
+  <g transform="translate(262.5, 772)">
+    <circle cx="0" cy="0" r="4" fill="#9CA3AF"/>
+    <text x="0" y="20" font-family="Arial" font-size="10" fill="#9CA3AF" text-anchor="middle">Profile</text>
+  </g>
+</svg> 

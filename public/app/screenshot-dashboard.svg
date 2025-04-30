@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="375" height="812" viewBox="0 0 375 812" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="375" height="812" fill="#F3F4F6"/>
+  
+  <!-- Status Bar -->
+  <rect width="375" height="44" fill="#4F46E5"/>
+  <text x="187.5" y="28" font-family="Arial" font-size="14" fill="white" text-anchor="middle">9:41</text>
+  
+  <!-- Header -->
+  <rect x="0" y="44" width="375" height="60" fill="white"/>
+  <text x="20" y="82" font-family="Arial" font-size="20" font-weight="bold" fill="#111827">Dashboard</text>
+  
+  <!-- Stats Cards -->
+  <g transform="translate(20, 124)">
+    <!-- Upcoming Events Card -->
+    <rect width="155" height="120" rx="12" fill="white"/>
+    <text x="12" y="30" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">Upcoming Events</text>
+    <text x="12" y="60" font-family="Arial" font-size="24" font-weight="bold" fill="#4F46E5">3</text>
+    <text x="12" y="85" font-family="Arial" font-size="12" fill="#6B7280">Next: Sarah's Birthday</text>
+    
+    <!-- Gift Ideas Card -->
+    <rect x="165" width="155" height="120" rx="12" fill="white"/>
+    <text x="177" y="30" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">Gift Ideas</text>
+    <text x="177" y="60" font-family="Arial" font-size="24" font-weight="bold" fill="#4F46E5">12</text>
+    <text x="177" y="85" font-family="Arial" font-size="12" fill="#6B7280">4 new this week</text>
+  </g>
+  
+  <!-- Recent Activity -->
+  <g transform="translate(20, 264)">
+    <text x="0" y="0" font-family="Arial" font-size="18" font-weight="bold" fill="#111827">Recent Activity</text>
+    
+    <!-- Activity Items -->
+    <g transform="translate(0, 20)">
+      <!-- Activity Item 1 -->
+      <rect width="335" height="70" rx="8" fill="white"/>
+      <circle cx="25" cy="35" r="15" fill="#4F46E5"/>
+      <text x="50" y="30" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">Added gift idea</text>
+      <text x="50" y="50" font-family="Arial" font-size="12" fill="#6B7280">Wireless headphones for John</text>
+      
+      <!-- Activity Item 2 -->
+      <rect y="90" width="335" height="70" rx="8" fill="white"/>
+      <circle cx="25" cy="125" r="15" fill="#10B981"/>
+      <text x="50" y="120" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">Event reminder</text>
+      <text x="50" y="140" font-family="Arial" font-size="12" fill="#6B7280">Mom's birthday in 5 days</text>
+    </g>
+  </g>
+  
+  <!-- Bottom Navigation -->
+  <rect x="0" y="752" width="375" height="60" fill="white"/>
+  <g transform="translate(37.5, 772)">
+    <circle cx="0" cy="0" r="4" fill="#4F46E5"/>
+    <text x="0" y="20" font-family="Arial" font-size="10" fill="#4F46E5" text-anchor="middle">Home</text>
+  </g>
+  <g transform="translate(112.5, 772)">
+    <circle cx="0" cy="0" r="4" fill="#9CA3AF"/>
+    <text x="0" y="20" font-family="Arial" font-size="10" fill="#9CA3AF" text-anchor="middle">Gifts</text>
+  </g>
+  <g transform="translate(187.5, 772)">
+    <circle cx="0" cy="0" r="4" fill="#9CA3AF"/>
+    <text x="0" y="20" font-family="Arial" font-size="10" fill="#9CA3AF" text-anchor="middle">Events</text>
+  </g>
+  <g transform="translate(262.5, 772)">
+    <circle cx="0" cy="0" r="4" fill="#9CA3AF"/>
+    <text x="0" y="20" font-family="Arial" font-size="10" fill="#9CA3AF" text-anchor="middle">Profile</text>
+  </g>
+</svg> 

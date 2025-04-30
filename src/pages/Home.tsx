@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import LiveChat from '../components/LiveChat';
 
 const Home: React.FC = () => {
   const { user } = useAuth();
@@ -735,6 +736,140 @@ const Home: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile App Preview Section */}
+      <div className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Mobile App</h2>
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Take Gift Tracker with you
+            </p>
+            <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+              Access your gift lists, track purchases, and manage events on the go with our mobile app.
+            </p>
+          </div>
+
+          <div className="mt-12 lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
+            {/* App Screenshots */}
+            <div className="relative">
+              <div className="relative mx-auto w-full max-w-md">
+                {/* Phone Frame */}
+                <div className="relative mx-auto w-72 h-[600px] bg-gray-900 rounded-[3rem] shadow-xl overflow-hidden">
+                  {/* Phone Notch */}
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-6 bg-gray-900 rounded-b-3xl z-10"></div>
+                  
+                  {/* App Screenshot */}
+                  <div className="absolute inset-0 bg-white">
+                    <img
+                      className="w-full h-full object-cover"
+                      src="/app/screenshot-dashboard.svg"
+                      alt="Gift Tracker Mobile App Dashboard"
+                    />
+                  </div>
+                  
+                  {/* Home Button */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gray-800 rounded-full"></div>
+                </div>
+                
+                {/* Floating Screenshots */}
+                <div className="absolute -bottom-10 -right-10 w-48 h-80 bg-white rounded-2xl shadow-xl overflow-hidden transform rotate-6">
+                  <img
+                    className="w-full h-full object-cover"
+                    src="/app/screenshot-gifts.svg"
+                    alt="Gift Tracker Mobile App Gifts"
+                  />
+                </div>
+                
+                <div className="absolute -top-10 -left-10 w-48 h-80 bg-white rounded-2xl shadow-xl overflow-hidden transform -rotate-6">
+                  <img
+                    className="w-full h-full object-cover"
+                    src="/app/screenshot-events.svg"
+                    alt="Gift Tracker Mobile App Events"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* App Features & Download Links */}
+            <div className="mt-10 lg:mt-0">
+              <div className="space-y-8">
+                {/* Key Features */}
+                <div>
+                  <h3 className="text-xl font-medium text-gray-900">Key Mobile Features</h3>
+                  <ul className="mt-4 space-y-4">
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0">
+                        <svg className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p className="ml-3 text-base text-gray-500">
+                        <span className="font-medium text-gray-900">Offline Access</span> - View your gift lists and ideas even without internet connection
+                      </p>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0">
+                        <svg className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p className="ml-3 text-base text-gray-500">
+                        <span className="font-medium text-gray-900">Barcode Scanner</span> - Scan product barcodes to quickly add items to your gift lists
+                      </p>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0">
+                        <svg className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p className="ml-3 text-base text-gray-500">
+                        <span className="font-medium text-gray-900">Push Notifications</span> - Get reminders for upcoming birthdays and events
+                      </p>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="flex-shrink-0">
+                        <svg className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p className="ml-3 text-base text-gray-500">
+                        <span className="font-medium text-gray-900">Photo Capture</span> - Take photos of gift ideas on the go and attach them to your lists
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Download Links */}
+                <div>
+                  <h3 className="text-xl font-medium text-gray-900">Download Now</h3>
+                  <div className="mt-4 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                    <a
+                      href="#"
+                      className="flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800"
+                    >
+                      <svg className="h-8 w-8 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.78 1.18-.19 2.31-.89 3.57-.84 1.51.18 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.1zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.32 2.32-1.88 4.18-3.74 4.25z"/>
+                      </svg>
+                      App Store
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800"
+                    >
+                      <svg className="h-8 w-8 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3.5 20.5v-17c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v17c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5zm14 0v-17c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v17c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5zm-7-17c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v17c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-17z"/>
+                      </svg>
+                      Google Play
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Newsletter Signup Section */}
       <div className="bg-indigo-700 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -814,6 +949,9 @@ const Home: React.FC = () => {
           </div>
         </div>
       </footer>
+
+      {/* Live Chat Widget */}
+      <LiveChat />
     </div>
   );
 };
