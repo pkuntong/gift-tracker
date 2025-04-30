@@ -452,6 +452,65 @@ const Home: React.FC = () => {
         </div>
       </div>
 
+      {/* FAQ Section */}
+      <div className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">FAQ</h2>
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Frequently Asked Questions
+            </p>
+            <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+              Find answers to common questions about Gift Tracker.
+            </p>
+          </div>
+
+          <div className="mt-12 max-w-3xl mx-auto">
+            <dl className="space-y-8">
+              {/* Question 1 */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <dt className="text-lg font-medium text-gray-900">
+                  How secure is my data?
+                </dt>
+                <dd className="mt-2 text-base text-gray-500">
+                  Your data security is our top priority. We use industry-standard encryption to protect your information, and we never share your personal data with third parties without your explicit consent. All data is stored on secure servers with regular backups and monitoring.
+                </dd>
+              </div>
+
+              {/* Question 2 */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <dt className="text-lg font-medium text-gray-900">
+                  Can I share my gift lists with family members?
+                </dt>
+                <dd className="mt-2 text-base text-gray-500">
+                  Yes! Gift Tracker makes it easy to collaborate with family members. You can share specific lists with family members, allowing them to view and contribute gift ideas. This is perfect for coordinating group gifts or planning surprises together.
+                </dd>
+              </div>
+
+              {/* Question 3 */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <dt className="text-lg font-medium text-gray-900">
+                  Is there a mobile app available?
+                </dt>
+                <dd className="mt-2 text-base text-gray-500">
+                  Gift Tracker is fully responsive and works great on all mobile devices. While we don't currently have a dedicated mobile app, our web application is optimized for mobile use and can be added to your home screen for an app-like experience. We're working on native mobile apps for iOS and Android, coming soon!
+                </dd>
+              </div>
+
+              {/* Question 4 */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <dt className="text-lg font-medium text-gray-900">
+                  How do I cancel my subscription?
+                </dt>
+                <dd className="mt-2 text-base text-gray-500">
+                  You can cancel your subscription at any time from your account settings. Simply go to your profile, select "Subscription," and click "Cancel Subscription." Your access will continue until the end of your current billing period. We don't charge any cancellation fees, and you can reactivate your subscription whenever you'd like.
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
       {/* Footer */}
       <footer className="bg-white">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
