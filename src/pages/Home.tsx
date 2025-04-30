@@ -259,9 +259,33 @@ const Home: React.FC = () => {
       {/* Testimonials Section */}
       <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-12">
-            What our users say
-          </h2>
+          <div className="text-center mb-12">
+            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Testimonials</h2>
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              What our users say
+            </p>
+            <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+              Join thousands of satisfied users who trust Gift Tracker for their gift-giving needs.
+            </p>
+          </div>
+
+          {/* Statistics Section */}
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3 mb-16">
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+              <div className="text-4xl font-extrabold text-indigo-600 mb-2">10,000+</div>
+              <div className="text-lg font-medium text-gray-900">Happy Users</div>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+              <div className="text-4xl font-extrabold text-indigo-600 mb-2">50,000+</div>
+              <div className="text-lg font-medium text-gray-900">Gifts Tracked</div>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+              <div className="text-4xl font-extrabold text-indigo-600 mb-2">4.8/5</div>
+              <div className="text-lg font-medium text-gray-900">Average Rating</div>
+            </div>
+          </div>
+
+          {/* Testimonials Grid */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {/* Testimonial 1 */}
             <div className="bg-white rounded-lg shadow-lg p-6">
@@ -275,6 +299,13 @@ const Home: React.FC = () => {
                   <h4 className="text-lg font-medium text-gray-900">Sarah Johnson</h4>
                   <p className="text-gray-500">Event Planner</p>
                 </div>
+              </div>
+              <div className="flex mb-4">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
               </div>
               <p className="text-gray-600">
                 "Gift Tracker has completely transformed how I manage gifts for my clients. It's a game-changer!"
@@ -294,6 +325,13 @@ const Home: React.FC = () => {
                   <p className="text-gray-500">Business Owner</p>
                 </div>
               </div>
+              <div className="flex mb-4">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
               <p className="text-gray-600">
                 "The best gift tracking app I've ever used. Simple, intuitive, and incredibly helpful."
               </p>
@@ -312,9 +350,55 @@ const Home: React.FC = () => {
                   <p className="text-gray-500">Teacher</p>
                 </div>
               </div>
+              <div className="flex mb-4">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg key={star} className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
               <p className="text-gray-600">
                 "I love how easy it is to keep track of gifts for my students and family. Highly recommended!"
               </p>
+            </div>
+          </div>
+
+          {/* Trust Badges */}
+          <div className="mt-16 text-center">
+            <h3 className="text-xl font-medium text-gray-900 mb-8">Trusted by Users Worldwide</h3>
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+              <div className="flex flex-col items-center">
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white shadow-md mb-2">
+                  <svg className="h-8 w-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-gray-900">SSL Secure</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white shadow-md mb-2">
+                  <svg className="h-8 w-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-gray-900">Data Protected</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white shadow-md mb-2">
+                  <svg className="h-8 w-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-gray-900">99.9% Uptime</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white shadow-md mb-2">
+                  <svg className="h-8 w-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-gray-900">24/7 Support</span>
+              </div>
             </div>
           </div>
         </div>
@@ -434,7 +518,7 @@ const Home: React.FC = () => {
               <div className="flex flex-col items-center">
                 <div className="h-16 w-16 flex items-center justify-center rounded-full bg-gray-100 mb-4">
                   <svg className="h-8 w-8 text-pink-500" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
                 </div>
                 <span className="text-sm font-medium text-gray-900">Instagram</span>
@@ -507,6 +591,204 @@ const Home: React.FC = () => {
                 </dd>
               </div>
             </dl>
+          </div>
+        </div>
+      </div>
+
+      {/* Blog/Resources Preview Section */}
+      <div className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Resources</h2>
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Gift Giving Tips & Resources
+            </p>
+            <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+              Discover helpful guides and tips to make your gift-giving experience even better.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {/* Gift Giving Guide */}
+            <div className="flex flex-col rounded-lg shadow-lg overflow-hidden">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-48 w-full object-cover bg-gray-50"
+                  src="/blog/gift-guide.svg"
+                  alt="Gift Giving Guide"
+                />
+              </div>
+              <div className="flex-1 bg-white p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600">
+                    Guide
+                  </p>
+                  <Link to="/blog/gift-giving-guide" className="block mt-2">
+                    <p className="text-xl font-semibold text-gray-900">
+                      The Ultimate Gift Giving Guide
+                    </p>
+                    <p className="mt-3 text-base text-gray-500">
+                      Learn the art of thoughtful gift-giving with our comprehensive guide covering everything from budgeting to presentation.
+                    </p>
+                  </Link>
+                </div>
+                <div className="mt-6">
+                  <Link
+                    to="/blog/gift-giving-guide"
+                    className="text-base font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Read more →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Holiday Planning Tips */}
+            <div className="flex flex-col rounded-lg shadow-lg overflow-hidden">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-48 w-full object-cover bg-gray-50"
+                  src="/blog/holiday-planning.svg"
+                  alt="Holiday Planning Tips"
+                />
+              </div>
+              <div className="flex-1 bg-white p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600">
+                    Tips & Tricks
+                  </p>
+                  <Link to="/blog/holiday-planning" className="block mt-2">
+                    <p className="text-xl font-semibold text-gray-900">
+                      Holiday Planning Made Easy
+                    </p>
+                    <p className="mt-3 text-base text-gray-500">
+                      Master the art of holiday gift planning with our expert tips for staying organized and within budget.
+                    </p>
+                  </Link>
+                </div>
+                <div className="mt-6">
+                  <Link
+                    to="/blog/holiday-planning"
+                    className="text-base font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Read more →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Birthday Gift Ideas */}
+            <div className="flex flex-col rounded-lg shadow-lg overflow-hidden">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-48 w-full object-cover bg-gray-50"
+                  src="/blog/birthday-ideas.svg"
+                  alt="Birthday Gift Ideas"
+                />
+              </div>
+              <div className="flex-1 bg-white p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600">
+                    Ideas
+                  </p>
+                  <Link to="/blog/birthday-ideas" className="block mt-2">
+                    <p className="text-xl font-semibold text-gray-900">
+                      Creative Birthday Gift Ideas
+                    </p>
+                    <p className="mt-3 text-base text-gray-500">
+                      Discover unique and memorable birthday gift ideas for everyone in your life, from kids to adults.
+                    </p>
+                  </Link>
+                </div>
+                <div className="mt-6">
+                  <Link
+                    to="/blog/birthday-ideas"
+                    className="text-base font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Read more →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              to="/blog"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              View all resources
+              <svg
+                className="ml-2 -mr-1 h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Newsletter Signup Section */}
+      <div className="bg-indigo-700 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+              Stay Updated with Gift Tracker
+            </h2>
+            <p className="mt-4 text-lg text-indigo-200">
+              Subscribe to our newsletter for gift-giving tips, feature updates, and exclusive offers.
+            </p>
+          </div>
+          <div className="mt-8 max-w-md mx-auto">
+            <form className="sm:flex justify-center">
+              <div className="w-full">
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email-address"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="w-full px-5 py-3 border border-transparent rounded-md shadow-sm placeholder-gray-400 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div className="mt-3 sm:mt-0 sm:ml-3">
+                <button
+                  type="submit"
+                  className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700"
+                >
+                  Subscribe
+                </button>
+              </div>
+            </form>
+            <div className="mt-4 flex items-center justify-center">
+              <input
+                id="privacy-policy"
+                name="privacy-policy"
+                type="checkbox"
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              />
+              <label htmlFor="privacy-policy" className="ml-2 block text-sm text-indigo-200">
+                I agree to the{' '}
+                <Link to="/privacy" className="text-white underline hover:text-indigo-200">
+                  Privacy Policy
+                </Link>
+                {' '}and consent to receiving marketing communications.
+              </label>
+            </div>
+            <p className="mt-3 text-sm text-indigo-200 text-center">
+              We respect your privacy. Unsubscribe at any time.
+            </p>
           </div>
         </div>
       </div>
