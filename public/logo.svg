@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gift box icon -->
+  <path d="M15 15H35V35H15V15Z" fill="#4F46E5"/>
+  <path d="M35 15H55V35H35V15Z" fill="#4F46E5"/>
+  <path d="M25 25H45V35H25V25Z" fill="#4F46E5"/>
+  <path d="M15 15L35 25L55 15" stroke="white" stroke-width="2"/>
+  <path d="M25 25L35 35L45 25" stroke="white" stroke-width="2"/>
+  
+  <!-- Text "Gift Tracker" -->
+  <text x="65" y="32" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#1F2937">
+    Gift Tracker
+  </text>
+</svg> 

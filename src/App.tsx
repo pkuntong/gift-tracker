@@ -1,11 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Dashboard from './components/Dashboard';
+import GiftManager from './components/GiftManager';
+import EventManager from './components/EventManager';
+import Profile from './components/Profile';
+import Pricing from './pages/Pricing';
+import Contact from './pages/Contact';
+import PrivateRoute from './components/PrivateRoute';
 import Analytics from '@/components/Analytics';
 import CookieConsent from '@/components/CookieConsent';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import TermsOfService from '@/pages/TermsOfService';
 import CookiePolicy from '@/pages/CookiePolicy';
-import Contact from '@/pages/Contact';
+import NotFound from './pages/NotFound';
+import Events from './pages/Events';
 
 // Import your page components here
 // import Home from '@/pages/Home';
@@ -17,20 +30,56 @@ import Contact from '@/pages/Contact';
 const App: React.FC = () => {
   return (
     <Router>
+      <AuthProvider>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/gifts"
+              element={
+                <PrivateRoute>
+                  <GiftManager />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/events"
+              element={
+                <PrivateRoute>
+                  <Events />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Layout>
+      </AuthProvider>
       {/* Analytics component to track page views */}
       <Analytics />
       <CookieConsent />
-      
-      <Routes>
-        {/* Define your routes here */}
-        <Route path="/" element={<div>Home</div>} />
-        <Route path="/features" element={<div>Features</div>} />
-        <Route path="/pricing" element={<div>Pricing</div>} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/cookie-policy" element={<CookiePolicy />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
     </Router>
   );
 };
