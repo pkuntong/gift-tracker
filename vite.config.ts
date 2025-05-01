@@ -9,7 +9,8 @@ const __dirname = dirname(__filename)
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  root: '.',
+  base: '/',
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -18,10 +19,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    emptyOutDir: true,
     rollupOptions: {
-      input: {
-        app: './index.html'
-      }
+      input: resolve(__dirname, 'index.html')
     },
   },
   server: {
