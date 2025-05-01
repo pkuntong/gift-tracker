@@ -27,5 +27,13 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    // Security measures for development
+    fs: {
+      strict: true,
+      allow: ['.'], // Restrict file serving to workspace root
+      deny: ['.env', '.env.*', '*.{pem,crt,key}'], // Deny sensitive files
+    },
+    cors: false, // Disable CORS in development
+    origin: 'http://localhost:3000', // Restrict origin in development
   },
 }) 
