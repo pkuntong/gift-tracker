@@ -63,11 +63,29 @@ export const getPaymentMethods = async (): Promise<PaymentMethod[]> => {
       throw new Error('Stripe failed to initialize');
     }
 
-    const { paymentMethods } = await stripe.paymentMethods.list({
-      type: 'card',
+    const response = await fetch('/api/payment-methods', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
-    return paymentMethods.data.map(pm => ({
+    if (!response.ok) {
+      throw new Error('Failed to fetch payment methods');
+    }
+
+    const { paymentMethods } = await response.json();
+
+    return paymentMethods.map((pm: {
+      id: string;
+      type: string;
+      card?: {
+        brand: string;
+        last4: string;
+        exp_month: number;
+        exp_year: number;
+      };
+    }) => ({
       id: pm.id,
       type: pm.type,
       card: pm.card ? {
