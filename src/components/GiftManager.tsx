@@ -117,13 +117,7 @@ const GiftManager: React.FC = () => {
         thankYouSent: false
       };
 
-      console.log('API URL:', API_URL);
-      console.log('Token:', token);
-      console.log('Gift data:', giftData);
-
       if (editingGift) {
-        console.log('Updating gift with ID:', editingGift.id);
-        console.log('Request URL:', `${API_URL}/gifts/${editingGift.id}`);
         await axios.put(
           `${API_URL}/gifts/${editingGift.id}`,
           giftData,
@@ -136,8 +130,6 @@ const GiftManager: React.FC = () => {
         );
         setSuccessMessage('Gift updated successfully');
       } else {
-        console.log('Adding new gift');
-        console.log('Request URL:', `${API_URL}/gifts`);
         await axios.post(
           `${API_URL}/gifts`,
           giftData,
