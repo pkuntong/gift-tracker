@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 const Profile: React.FC = () => {
   const { user } = useAuth();
   const [name, setName] = useState(user?.name || '');
-  const [email, setEmail] = useState(user?.email || '');
+  const email = user?.email || '';
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);

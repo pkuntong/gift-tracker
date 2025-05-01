@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -7,7 +7,6 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import GiftManager from './components/GiftManager';
-import EventManager from './components/EventManager';
 import Profile from './components/Profile';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';

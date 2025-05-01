@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { User } from '../types/user';
 
 // Define types
@@ -15,11 +15,6 @@ interface AuthContextType {
   resetPassword: (email: string) => Promise<void>;
   updatePassword: (token: string, password: string) => Promise<void>;
   updateProfile: (name: string) => Promise<void>;
-}
-
-interface LoginResponse {
-  token: string;
-  user: User;
 }
 
 interface AuthResponse {
@@ -199,7 +194,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         { name },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setUser(response.data);
+      setUser(response.data as User);
       setIsLoading(false);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Profile update failed');

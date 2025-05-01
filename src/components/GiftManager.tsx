@@ -14,7 +14,7 @@ interface Gift {
 }
 
 const GiftManager: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [gifts, setGifts] = useState<Gift[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
