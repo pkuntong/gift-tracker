@@ -14,12 +14,38 @@ const Login: React.FC = () => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
-
+    
+    // Add more visual feedback
+    console.log('Login form submitted with:', { email, password: '********' });
+    
     try {
+      // Check if email and password are provided
+      if (!email.trim()) {
+        throw new Error('Please enter your email address');
+      }
+      
+      if (!password.trim()) {
+        throw new Error('Please enter your password');
+      }
+      
+      console.log('Calling login function from AuthContext');
       await login(email, password);
+      console.log('Login successful, redirecting to dashboard');
       navigate('/dashboard');
-    } catch (err) {
-      setError('Failed to sign in. Please check your credentials.');
+    } catch (err: any) {
+      console.error('Login component error:', err);
+      
+      // More detailed error message
+      if (err?.message) {
+        setError(err.message);
+      } else {
+        setError('Failed to sign in. Please check your credentials and try again.');
+      }
+      
+      // Log additional error details if available
+      if (err?.response) {
+        console.error('Error response:', err.response);
+      }
     } finally {
       setIsLoading(false);
     }

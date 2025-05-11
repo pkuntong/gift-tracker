@@ -10,6 +10,8 @@ import GiftManager from './components/GiftManager';
 import Profile from './components/Profile';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
+import About from './pages/About';
+import Blog from './pages/Blog';
 import PrivateRoute from './components/PrivateRoute';
 import Analytics from '@/components/Analytics';
 import CookieConsent from '@/components/CookieConsent';
@@ -36,6 +38,8 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             <Route
               path="/dashboard"

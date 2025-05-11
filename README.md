@@ -27,10 +27,14 @@ npm install
 ```bash
 cp .env.example .env
 ```
-Edit `.env` with your configuration:
-- `VITE_API_URL`: Backend API URL
-- `VITE_STRIPE_PUBLIC_KEY`: Stripe public key
-- `VITE_STRIPE_SECRET_KEY`: Stripe secret key
+
+Edit `.env` with your configuration:  
+- `VITE_API_URL`: Backend API URL (required)
+- `VITE_STRIPE_PUBLIC_KEY`: Stripe public key for payment processing (optional)
+- `VITE_STRIPE_SECRET_KEY`: Stripe secret key (optional)
+- `VITE_ANALYTICS_ID`: Analytics tracking ID (optional)
+
+**Note**: The application will check for required environment variables on startup and display an error message if any are missing.
 
 4. Start the development server
 ```bash
@@ -49,6 +53,10 @@ npm run mock-api
 - Tailwind CSS
 - Stripe
 - Express (Mock API)
+
+## E-Commerce Integrations
+
+- <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Etsy_logo_small.svg" alt="Etsy Logo" width="20" height="20"> Etsy - Integration for handmade and vintage items
 
 ## Contributing
 
