@@ -25,8 +25,11 @@ interface AuthResponse {
 // Create context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// API base URL
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// Import environment variables
+import { env } from '../utils/env';
+
+// API base URL from validated environment variables
+const API_URL = env.VITE_API_URL;
 
 // Token key constant
 const AUTH_TOKEN_KEY = 'auth_token';
@@ -91,29 +94,97 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(true);
     setError(null);
     try {
+      // Enhanced debugging information
+      console.log('%c Authentication Debug Info:', 'background: #222; color: #bada55; font-size: 12px;');
       console.log('Login attempt with email:', email);
+      console.log('Password provided:', password ? '********' : 'No password provided');
       console.log('API URL:', API_URL);
+      console.log('Full endpoint:', `${API_URL}/auth/login`);
       
-      const response = await axios.post<AuthResponse>(`${API_URL}/auth/login`, {
-        email,
-        password
-      });
+      // Make sure email and password are properly trimmed and passed 
+      const trimmedEmail = email.trim();
+      const trimmedPassword = password.trim();
       
-      console.log('Login response:', response.data);
+      if (!trimmedEmail || !trimmedPassword) {
+        throw new Error('Email and password are required');
+      }
       
+      // Log request details before sending
+      console.log('Request payload:', { email: trimmedEmail, password: '********' });
+      
+      // Try with the simplest form of request to ensure compatibility with the mock API
+      const payload = { email: trimmedEmail, password: trimmedPassword };
+      console.log('Using direct payload:', JSON.stringify(payload));
+      
+      // Use direct axios post call with simple request body
+      const response = await axios.post<AuthResponse>(`${API_URL}/auth/login`, payload);
+      
+      // Log successful response
+      console.log('%c Login Success! Response:', 'background: green; color: white;');
+      console.log('Status:', response.status);
+      console.log('Response headers:', response.headers);
+      console.log('Response data:', response.data);
+      
+      // Verify response has the expected structure
+      if (!response.data || !response.data.token || !response.data.user) {
+        throw new Error('Invalid response format from server');
+      }
+      
+      // Destructure the response data (not response directly)
       const { token, user } = response.data;
-      console.log('Token received:', token);
+      console.log('Token received:', token ? '✅ Yes' : '❌ No');
+      console.log('User received:', user ? '✅ Yes' : '❌ No');
       
+      // Clear any existing token first
+      localStorage.removeItem(AUTH_TOKEN_KEY);
+      
+      // Store auth token
       localStorage.setItem(AUTH_TOKEN_KEY, token);
-      console.log('Token stored in localStorage');
+      console.log('Auth token saved to localStorage:', AUTH_TOKEN_KEY);
+      
+      // Test retrieving token
+      const savedToken = localStorage.getItem(AUTH_TOKEN_KEY);
+      console.log('Token verification from localStorage:', savedToken === token ? '✅ Matched' : '❌ Mismatch');
       
       setUser(user as User);
       setIsLoading(false);
+      console.log('Login process completed successfully');
     } catch (error: unknown) {
-      console.error('Login error:', error);
-      const axiosError = error as { response?: { data?: { message?: string } } };
-      console.error('Error response:', axiosError.response);
-      setError(axiosError.response?.data?.message || 'Login failed');
+      console.error('%c Login Error! 🚨', 'background: red; color: white; font-size: 12px;');
+      console.error('Original error object:', error);
+      
+      // Extract useful error information
+      const axiosError = error as { 
+        response?: { status?: number, data?: any, headers?: any },
+        request?: any,
+        message?: string,
+        config?: any
+      };
+      
+      if (axiosError.response) {
+        // The server responded with a status code outside the 2xx range
+        console.error('Error status:', axiosError.response.status);
+        console.error('Error data:', axiosError.response.data);
+        console.error('Error headers:', axiosError.response.headers);
+        
+        // Try to provide a more specific error message
+        if (axiosError.response.status === 401) {
+          setError('Invalid email or password. Please check your credentials and try again.');
+        } else {
+          setError(axiosError.response?.data?.message || `Server error: ${axiosError.response.status}`);
+        }
+      } else if (axiosError.request) {
+        // The request was made but no response was received
+        console.error('No response received from server. Network error?');
+        console.error('Request sent:', axiosError.request);
+        setError('Network error: Unable to connect to the server. Please check your internet connection.');
+      } else {
+        // Something happened in setting up the request
+        console.error('Error message:', axiosError.message);
+        console.error('Request config:', axiosError.config);
+        setError(axiosError.message || 'An unexpected error occurred during login.');
+      }
+      
       setIsLoading(false);
       throw error;
     }

@@ -86,7 +86,7 @@ const Home: React.FC = () => {
                     <span className="block text-indigo-600">with Gift Tracker</span>
                   </h1>
                   <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl">
-                    Keep track of all your gift ideas, purchases, and thank you notes in one place. Perfect for holidays, birthdays, and special occasions.
+                    Your all-in-one platform for managing gifts, tracking budgets, and finding perfect presents. Save time, reduce stress, and make every occasion memorable with personalized recommendations and smart reminders.
                   </p>
                   
                   {/* Enhanced CTA Section */}
@@ -249,6 +249,36 @@ const Home: React.FC = () => {
                   <h3 className="text-lg leading-6 font-medium text-gray-900">Event Planning</h3>
                   <p className="mt-2 text-base text-gray-500">
                     Plan for upcoming events and never miss a birthday or holiday.
+                  </p>
+                </div>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="relative">
+                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="ml-16">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">Budget Tracking</h3>
+                  <p className="mt-2 text-base text-gray-500">
+                    Set and manage gift budgets for each person and event. Track your spending and stay within your limits.
+                  </p>
+                </div>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="relative">
+                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+                <div className="ml-16">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">Smart Recommendations</h3>
+                  <p className="mt-2 text-base text-gray-500">
+                    Get personalized gift suggestions based on recipient preferences, interests, and your budget.
                   </p>
                 </div>
               </div>
@@ -484,6 +514,56 @@ const Home: React.FC = () => {
                   </svg>
                 </div>
                 <span className="text-sm font-medium text-gray-900">Walmart</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-gray-100 mb-4">
+                  <svg className="h-8 w-8 text-orange-600" viewBox="0 0 28 28" fill="currentColor">
+                    <path d="M13.26 4.45c0 .64-.53 1.16-1.19 1.16s-1.19-.52-1.19-1.16c0-.64.53-1.16 1.19-1.16s1.19.52 1.19 1.16zm-2.38 2.73h-2.38v1.57h.47c.54 0 .78-.04.98-.16.2-.12.33-.31.33-.57 0-.26-.13-.45-.33-.57-.19-.12-.44-.16-.98-.16h-.49v.74h.04c.41 0 .66-.1.66-.37 0-.27-.24-.37-.66-.37h-.04v.16h-1.32v-2.37h2.42c.54 0 .99.06 1.3.31.31.24.5.61.5 1.04 0 .43-.19.79-.5 1.04-.32.24-.76.31-1.3.31zm1.01 5.09h-1.2c-.13-.34-.29-.67-.46-1.01h-.94v1.01h-1.01v-3.32h1.48c.32 0 .59.03.82.1.22.07.4.17.53.31.13.14.23.3.29.49.06.19.09.4.09.62 0 .34-.08.62-.25.86-.16.24-.39.41-.7.51.13.24.25.47.35.7l.79-.67-1.42-1.42 1.42-1.42-.79-.67zm11.25-8.55h-23.35v14.83h11.15v3.37h-1.68v.37h4.4v-.37h-1.68v-3.37h11.15v-14.83zm-12.93 12.62l1.73-4.33h1.32l1.68 4.33h-1.08l-.35-.95h-1.89l-.35.95h-1.06zm1.62-1.71h1.52l-.75-2.05-.77 2.05zm4.11 1.71h1.49c.59 0 1.07-.07 1.44-.2.38-.14.66-.33.85-.58.19-.25.33-.55.4-.9.08-.35.11-.73.11-1.15 0-.41-.03-.79-.11-1.14-.08-.35-.21-.65-.4-.9-.2-.25-.47-.44-.85-.58-.37-.14-.85-.2-1.44-.2h-1.49v5.65z"></path>
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-gray-900">Etsy</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Premium Services Section */}
+          <div className="mt-16">
+            <h3 className="text-xl font-medium text-gray-900 text-center mb-6">Premium Services</h3>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              <div className="bg-white rounded-lg shadow-lg p-6 border-t-4 border-indigo-500">
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
+                  <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+                <h4 className="text-lg font-medium text-gray-900 text-center mb-2">Gift Recommendations</h4>
+                <p className="text-center text-gray-500">
+                  Our AI-powered system learns recipient preferences and suggests perfect gifts based on personality, interests, and past gifts.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-6 border-t-4 border-indigo-500">
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
+                  <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h4 className="text-lg font-medium text-gray-900 text-center mb-2">Budget Planner</h4>
+                <p className="text-center text-gray-500">
+                  Set budgets for events, track spending, and get alerts when you're approaching your limit. Easily manage holiday and special occasion expenses.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-lg p-6 border-t-4 border-indigo-500">
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
+                  <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                </div>
+                <h4 className="text-lg font-medium text-gray-900 text-center mb-2">Smart Reminders</h4>
+                <p className="text-center text-gray-500">
+                  Never miss an important date with smart notifications. Get timely reminders for birthdays, anniversaries, and other special occasions.
+                </p>
               </div>
             </div>
           </div>
