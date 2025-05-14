@@ -40,7 +40,11 @@ export default defineConfig({
       allow: ['.'], // Restrict file serving to workspace root
       deny: ['.env', '.env.*', '*.{pem,crt,key}'], // Deny sensitive files
     },
-    cors: false, // Disable CORS in development
-    origin: 'http://localhost:3000', // Restrict origin in development
+    cors: true, // Enable CORS in development
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      port: 3000
+    }
   },
 }) 
