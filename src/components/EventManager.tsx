@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { addEvent, getUserEvents, updateEvent, deleteEvent } from '../firebase/event-service';
 
 interface Event {
   id: string;
@@ -8,13 +8,15 @@ interface Event {
   date: string;
   type: string;
   description?: string;
+  userId?: string;
 }
 
 const EventManager: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isAddingEvent, setIsAddingEvent] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
   const [formData, setFormData] = useState({
@@ -24,36 +26,31 @@ const EventManager: React.FC = () => {
     description: ''
   });
 
-  const API_URL = 'http://localhost:8000';
-  const AUTH_TOKEN_KEY = 'auth_token';
-
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && user) {
       console.log('Fetching events...');
       fetchEvents();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user]);
 
   const fetchEvents = async () => {
+    if (!user) {
+      console.error('No authenticated user found');
+      setError('Please log in to view events');
+      return;
+    }
+    
     try {
       setIsLoading(true);
       setError(null);
-      const token = localStorage.getItem(AUTH_TOKEN_KEY);
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-      console.log('Making API request to:', `${API_URL}/events`);
-      const response = await axios.get<Event[]>(`${API_URL}/events`, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      console.log('API response:', response.data);
-      setEvents(response.data);
+      console.log('Fetching events from Firebase for user:', user.id);
+      
+      const userEvents = await getUserEvents(user.id);
+      console.log('Firebase events response:', userEvents);
+      setEvents(userEvents);
     } catch (err: any) {
-      console.error('Error details:', err.response || err);
-      setError(err.response?.data?.message || 'Failed to fetch events. Please try again later.');
+      console.error('Error fetching events from Firebase:', err);
+      setError(err.message || 'Failed to fetch events. Please try again later.');
     } finally {
       setIsLoading(false);
     }
@@ -67,37 +64,31 @@ const EventManager: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccessMessage(null);
+
+    if (!user) {
+      setError('You must be logged in to add or edit events');
+      return;
+    }
 
     try {
-      const token = localStorage.getItem(AUTH_TOKEN_KEY);
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-
       if (editingEvent) {
         // Update existing event
-        await axios.put(
-          `${API_URL}/events/${editingEvent.id}`,
-          formData,
-          { 
-            headers: { 
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            } 
-          }
-        );
+        await updateEvent(editingEvent.id, user.id, {
+          name: formData.name,
+          date: formData.date,
+          type: formData.type,
+          description: formData.description
+        });
+        setSuccessMessage('Event updated successfully');
       } else {
         // Add new event
-        await axios.post(
-          `${API_URL}/events`,
-          formData,
-          { 
-            headers: { 
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            } 
-          }
-        );
+        const eventData = {
+          ...formData,
+          userId: user.id
+        };
+        await addEvent(eventData);
+        setSuccessMessage('Event added successfully');
       }
 
       // Reset form and refresh events
@@ -112,7 +103,7 @@ const EventManager: React.FC = () => {
       fetchEvents();
     } catch (err: any) {
       console.error('Error saving event:', err);
-      setError(err.response?.data?.message || (editingEvent ? 'Failed to update event' : 'Failed to add event'));
+      setError(err.message || 'Failed to save event');
     }
   };
 
@@ -125,28 +116,25 @@ const EventManager: React.FC = () => {
       description: event.description || ''
     });
     setIsAddingEvent(true);
+    setError(null);
+    setSuccessMessage(null);
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this event?')) {
+    if (!user || !window.confirm('Are you sure you want to delete this event?')) {
       return;
     }
 
     try {
-      const token = localStorage.getItem(AUTH_TOKEN_KEY);
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-      await axios.delete(`${API_URL}/events/${id}`, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      setIsLoading(true);
+      await deleteEvent(id, user.id);
+      setSuccessMessage('Event deleted successfully');
       fetchEvents();
     } catch (err: any) {
+      setError('Failed to delete event');
       console.error('Error deleting event:', err);
-      setError(err.response?.data?.message || 'Failed to delete event');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -193,6 +181,12 @@ const EventManager: React.FC = () => {
         {error && (
           <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
             <span className="block sm:inline">{error}</span>
+          </div>
+        )}
+        
+        {successMessage && (
+          <div className="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span className="block sm:inline">{successMessage}</span>
           </div>
         )}
 

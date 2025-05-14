@@ -8,9 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "format": "prettier --write .",
-    "test-api": "node scripts/test-api.js",
-    "mock-api": "node scripts/mock-api.js"
+    "format": "prettier --write ."
   },
   "keywords": [
     "gift tracking",
@@ -23,13 +21,22 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
-    "@stripe/stripe-js": "^7.2.0",
+    "@stripe/react-stripe-js": "^3.7.0",
+    "@stripe/stripe-js": "^7.3.0",
+    "@types/papaparse": "^5.3.16",
     "autoprefixer": "^10.4.18",
     "axios": "^1.9.0",
+    "file-saver": "^2.0.5",
+    "firebase": "^11.7.1",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
+    "papaparse": "^5.5.2",
     "postcss": "^8.4.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^6.30.0",
+    "stripe": "^18.1.0",
     "tailwindcss": "^3.4.1"
   },
   "devDependencies": {

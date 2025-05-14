@@ -2,13 +2,18 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
+// Note: For a production app, you would install and use the vite-plugin-pwa package
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    // This is where you would add the PWA plugin in a production app
+    // For example: VitePWA({ ... options ... })
+  ],
   root: '.',
   base: '/',
   resolve: {
@@ -24,6 +29,8 @@ export default defineConfig({
       input: resolve(__dirname, 'index.html')
     },
   },
+  // Copy service worker and manifest to dist folder during build
+  publicDir: 'public',
   server: {
     port: 3000,
     open: true,

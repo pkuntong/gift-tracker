@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import SubscriptionManager from '../components/SubscriptionManager';
+import PaymentCheckout from '../components/PaymentCheckout';
 
 const Pricing: React.FC = () => {
   const { user } = useAuth();
+  const [showSubscriptions, setShowSubscriptions] = useState(false);
+  const [showOneTimePayment, setShowOneTimePayment] = useState(false);
+  const [selectedTier, setSelectedTier] = useState<string | null>(null);
 
   const tiers = [
     {
       name: 'Basic',
       price: 'Free',
+      priceId: '',
+      oneTimePrice: 0,
       description: 'Perfect for getting started',
       features: [
         'Up to 50 gifts',
@@ -20,6 +27,8 @@ const Pricing: React.FC = () => {
     {
       name: 'Pro',
       price: '$9.99',
+      priceId: 'price_pro', // This would be a real Stripe price ID in production
+      oneTimePrice: 9999, // $99.99 for annual payment (in cents)
       period: '/month',
       description: 'Best for regular gift givers',
       features: [
@@ -35,6 +44,8 @@ const Pricing: React.FC = () => {
     {
       name: 'Enterprise',
       price: 'Custom',
+      priceId: 'price_premium', // This would be a real Stripe price ID in production
+      oneTimePrice: 19999, // $199.99 for annual payment (in cents)
       description: 'For large organizations',
       features: [
         'Everything in Pro',
@@ -46,6 +57,49 @@ const Pricing: React.FC = () => {
       ]
     }
   ];
+
+  const handleSelectPlan = (tierName: string, isSubscription: boolean) => {
+    setSelectedTier(tierName);
+    if (isSubscription) {
+      setShowSubscriptions(true);
+      setShowOneTimePayment(false);
+    } else {
+      setShowOneTimePayment(true);
+      setShowSubscriptions(false);
+    }
+  };
+
+  const handleSuccess = () => {
+    alert('Thank you for your purchase!');
+    setShowSubscriptions(false);
+    setShowOneTimePayment(false);
+    setSelectedTier(null);
+  };
+
+  const handleCancel = () => {
+    setShowSubscriptions(false);
+    setShowOneTimePayment(false);
+    setSelectedTier(null);
+  };
+
+  // If showing subscription management or one-time payment, render that component
+  if (showSubscriptions) {
+    return <SubscriptionManager />;
+  }
+
+  if (showOneTimePayment && selectedTier) {
+    const tier = tiers.find(t => t.name === selectedTier);
+    if (!tier || !tier.oneTimePrice) return null;
+    
+    return (
+      <PaymentCheckout
+        amount={tier.oneTimePrice}
+        description={`Annual ${tier.name} Plan - Gift Tracker`}
+        onSuccess={handleSuccess}
+        onCancel={handleCancel}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
@@ -76,16 +130,48 @@ const Pricing: React.FC = () => {
                   )}
                 </p>
                 <p className="mt-5 text-lg text-gray-500">{tier.description}</p>
-                <Link
-                  to={user ? '/dashboard' : '/signup'}
-                  className={`mt-8 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium ${
-                    tier.highlighted
-                      ? 'bg-indigo-600 text-white hover:bg-indigo-700'
-                      : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
-                  }`}
-                >
-                  {user ? 'Go to Dashboard' : 'Get started'}
-                </Link>
+                
+                {tier.price !== 'Free' ? (
+                  user ? (
+                    <div className="mt-6 space-y-2">
+                      <button
+                        onClick={() => handleSelectPlan(tier.name, true)}
+                        className={`w-full py-3 px-6 border border-transparent rounded-md text-center font-medium ${
+                          tier.highlighted
+                            ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                            : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
+                        }`}
+                      >
+                        Subscribe Monthly
+                      </button>
+                      
+                      <button
+                        onClick={() => handleSelectPlan(tier.name, false)}
+                        className="w-full py-3 px-6 border border-gray-300 rounded-md text-center font-medium bg-white text-gray-700 hover:bg-gray-50"
+                      >
+                        Pay Annually (Save 15%)
+                      </button>
+                    </div>
+                  ) : (
+                    <Link
+                      to="/signup"
+                      className={`mt-8 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium ${
+                        tier.highlighted
+                          ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                          : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
+                      }`}
+                    >
+                      Sign Up to Subscribe
+                    </Link>
+                  )
+                ) : (
+                  <Link
+                    to={user ? '/dashboard' : '/signup'}
+                    className="mt-8 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium bg-indigo-50 text-indigo-700 hover:bg-indigo-100"
+                  >
+                    {user ? 'Go to Dashboard' : 'Get Started Free'}
+                  </Link>
+                )}
               </div>
               <div className="pt-6 pb-8 px-6">
                 <h3 className="text-xs font-medium text-gray-900 tracking-wide uppercase">
@@ -122,9 +208,20 @@ const Pricing: React.FC = () => {
             </Link>
           </p>
         </div>
+        
+        {user && (
+          <div className="mt-8 text-center">
+            <button
+              onClick={() => setShowSubscriptions(true)}
+              className="text-indigo-600 hover:text-indigo-800 font-medium"
+            >
+              Manage Your Subscriptions
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default Pricing; 
+export default Pricing;

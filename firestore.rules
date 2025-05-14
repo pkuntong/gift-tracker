@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Common function to check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if the user ID in the document matches the authenticated user
+    function isOwner(resource) {
+      return isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+    
+    // Check if a new or updated document has valid user ID
+    function hasValidUserId() {
+      return isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Users collection - each user can read and update only their own document
+    match /users/{userId} {
+      allow read, update: if isAuthenticated() && request.auth.uid == userId;
+      allow create: if isAuthenticated() && request.resource.data.id == request.auth.uid;
+    }
+    
+    // Gifts collection - users can only access their own gifts
+    match /gifts/{giftId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if hasValidUserId();
+      allow update, delete: if isOwner(resource);
+    }
+    
+    // Events collection - users can only access their own events
+    match /events/{eventId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if hasValidUserId();
+      allow update, delete: if isOwner(resource);
+    }
+  }
+}
