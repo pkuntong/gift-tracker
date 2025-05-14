@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { addGift, getUserGifts, updateGift, deleteGift } from '../firebase/gift-service';
+import { createThankYouReminder, requestNotificationPermission } from '../firebase/notification-service';
+import ImageUploader from './ImageUploader';
 
 interface Gift {
   id: string;
@@ -10,11 +12,19 @@ interface Gift {
   occasion: string;
   date: string;
   thankYouSent: boolean;
+  acknowledged: boolean;
+  acknowledgedDate?: string;
+  reminderDate?: string;
+  reminderSet: boolean;
   notes?: string;
+  userId?: string;
+  photoURL?: string;        // URL to the gift photo
+  giverPhotoURL?: string;   // URL to the giver's photo
+  eventPhotoURL?: string;   // URL to the event photo
 }
 
 const GiftManager: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [gifts, setGifts] = useState<Gift[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,40 +38,46 @@ const GiftManager: React.FC = () => {
     giver: '',
     occasion: '',
     date: '',
-    notes: ''
+    notes: '',
+    photoURL: '',
+    giverPhotoURL: '',
+    eventPhotoURL: ''
   });
 
-  // Use environment variable or fallback to localhost
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-  const AUTH_TOKEN_KEY = 'auth_token';  // Match the token key from AuthContext
-
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && user) {
       console.log('Fetching gifts...');
       fetchGifts();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user]);
 
   const fetchGifts = async () => {
+    if (!user) {
+      console.error('No authenticated user found');
+      setError('Please log in to view gifts');
+      return;
+    }
+    
     try {
       setIsLoading(true);
       setError(null);
-      const token = localStorage.getItem(AUTH_TOKEN_KEY);
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-      console.log('Making API request to:', `${API_URL}/gifts`);
-      const response = await axios.get<Gift[]>(`${API_URL}/gifts`, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      console.log('API response:', response.data);
-      setGifts(response.data);
+      console.log('Fetching gifts from Firebase for user:', user.id);
+      
+      const userGifts = await getUserGifts(user.id);
+      console.log('Firebase gifts response:', userGifts);
+      
+      // Map the database gifts to include the new fields if they don't exist
+      const updatedGifts = userGifts.map(gift => ({
+        ...gift,
+        acknowledged: gift.acknowledged ?? false,
+        reminderSet: gift.reminderSet ?? false,
+        // Add other default values for new fields
+      }));
+      
+      setGifts(updatedGifts);
     } catch (err: any) {
-      console.error('Error details:', err.response || err);
-      setError(err.response?.data?.message || 'Failed to fetch gifts. Please try again later.');
+      console.error('Error fetching gifts from Firebase:', err);
+      setError(err.message || 'Failed to fetch gifts. Please try again later.');
     } finally {
       setIsLoading(false);
     }
@@ -99,48 +115,52 @@ const GiftManager: React.FC = () => {
     setError(null);
     setSuccessMessage(null);
 
-    if (!validateForm()) {
+    if (!validateForm() || !user) {
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const token = localStorage.getItem(AUTH_TOKEN_KEY);
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-
       const giftData = {
         ...formData,
         price: formData.price ? parseFloat(formData.price) : 0,
-        thankYouSent: false
+        thankYouSent: false,
+        acknowledged: false,
+        reminderSet: false,
+        userId: user.id
       };
 
       if (editingGift) {
-        await axios.put(
-          `${API_URL}/gifts/${editingGift.id}`,
-          giftData,
-          { 
-            headers: { 
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            } 
-          }
-        );
+        // Update existing gift
+        await updateGift(editingGift.id, user.id, {
+          name: giftData.name,
+          price: giftData.price,
+          giver: giftData.giver,
+          occasion: giftData.occasion,
+          date: giftData.date,
+          notes: giftData.notes,
+          photoURL: giftData.photoURL,
+          giverPhotoURL: giftData.giverPhotoURL,
+          eventPhotoURL: giftData.eventPhotoURL
+        });
         setSuccessMessage('Gift updated successfully');
       } else {
-        await axios.post(
-          `${API_URL}/gifts`,
-          giftData,
-          { 
-            headers: { 
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            } 
-          }
-        );
+        // Add new gift
+        const newGift = await addGift(giftData);
         setSuccessMessage('Gift added successfully');
+        
+        // Check notification permission and create a thank-you reminder
+        const hasPermission = await requestNotificationPermission();
+        if (hasPermission && newGift && newGift.id) {
+          // Create a thank-you reminder for the new gift
+          await createThankYouReminder(
+            newGift.id,
+            newGift.name,
+            newGift.giver
+          );
+          console.log('Thank you reminder created for', newGift.name);
+        }
       }
 
       // Reset form and refresh gifts
@@ -150,54 +170,51 @@ const GiftManager: React.FC = () => {
         giver: '',
         occasion: '',
         date: '',
-        notes: ''
+        notes: '',
+        photoURL: '',
+        giverPhotoURL: '',
+        eventPhotoURL: ''
       });
       setIsAddingGift(false);
       setEditingGift(null);
       fetchGifts();
     } catch (err: any) {
       console.error('Error saving gift:', err);
-      console.error('Error response:', err.response);
-      console.error('Error request:', err.request);
-      console.error('Error config:', err.config);
-      setError(err.response?.data?.message || (editingGift ? 'Failed to update gift' : 'Failed to add gift'));
+      setError(err.message || (editingGift ? 'Failed to update gift' : 'Failed to add gift'));
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleEdit = (gift: Gift) => {
-    setEditingGift(gift);
     setFormData({
       name: gift.name,
       price: gift.price.toString(),
       giver: gift.giver,
       occasion: gift.occasion,
       date: gift.date,
-      notes: gift.notes || ''
+      notes: gift.notes || '',
+      photoURL: gift.photoURL || '',
+      giverPhotoURL: gift.giverPhotoURL || '',
+      eventPhotoURL: gift.eventPhotoURL || ''
     });
+    setEditingGift(gift);
     setIsAddingGift(true);
     setError(null);
     setSuccessMessage(null);
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this gift?')) {
+    if (!user || !window.confirm('Are you sure you want to delete this gift?')) {
       return;
     }
 
     try {
       setIsLoading(true);
-      const token = localStorage.getItem(AUTH_TOKEN_KEY);
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-      await axios.delete(`${API_URL}/gifts/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await deleteGift(id, user.id);
       setSuccessMessage('Gift deleted successfully');
       fetchGifts();
-    } catch (err) {
+    } catch (err: any) {
       setError('Failed to delete gift');
       console.error('Error deleting gift:', err);
     } finally {
@@ -206,20 +223,14 @@ const GiftManager: React.FC = () => {
   };
 
   const handleToggleThankYou = async (gift: Gift) => {
+    if (!user) return;
+    
     try {
       setIsLoading(true);
-      const token = localStorage.getItem(AUTH_TOKEN_KEY);
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-      await axios.put(
-        `${API_URL}/gifts/${gift.id}`,
-        { ...gift, thankYouSent: !gift.thankYouSent },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setSuccessMessage(`Thank you note ${!gift.thankYouSent ? 'marked as sent' : 'marked as not sent'}`);
+      await updateGift(gift.id, user.id, { thankYouSent: !gift.thankYouSent });
+      setSuccessMessage(`Thank you ${gift.thankYouSent ? 'unmarked' : 'marked'} as sent`);
       fetchGifts();
-    } catch (err) {
+    } catch (err: any) {
       setError('Failed to update thank you status');
       console.error('Error updating thank you status:', err);
     } finally {
@@ -252,7 +263,10 @@ const GiftManager: React.FC = () => {
                 giver: '',
                 occasion: '',
                 date: '',
-                notes: ''
+                notes: '',
+                photoURL: '',
+                giverPhotoURL: '',
+                eventPhotoURL: ''
               });
               setError(null);
               setSuccessMessage(null);
@@ -358,20 +372,52 @@ const GiftManager: React.FC = () => {
                     />
                   </div>
                 </div>
-                <div>
-                  <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
-                    Notes
-                  </label>
+                <div className="mb-3">
+                  <label htmlFor="notes" className="form-label">Notes</label>
                   <textarea
-                    name="notes"
                     id="notes"
-                    rows={3}
+                    name="notes"
+                    className="form-control"
                     value={formData.notes}
                     onChange={handleInputChange}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    placeholder="Add any additional details about the gift"
-                  />
+                    rows={3}
+                  ></textarea>
                 </div>
+
+                <div className="mb-4">
+                  <h5 className="mb-3">Photos (Optional)</h5>
+                  
+                  <div className="mb-3">
+                    <label className="form-label d-block">Gift Photo</label>
+                    <ImageUploader
+                      onImageUploaded={(url) => setFormData(prev => ({ ...prev, photoURL: url }))}
+                      existingImageUrl={formData.photoURL}
+                      path={`users/${user?.id}/gifts`}
+                      buttonText="Upload Gift Photo"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label d-block">Giver Photo</label>
+                    <ImageUploader
+                      onImageUploaded={(url) => setFormData(prev => ({ ...prev, giverPhotoURL: url }))}
+                      existingImageUrl={formData.giverPhotoURL}
+                      path={`users/${user?.id}/givers`}
+                      buttonText="Upload Giver Photo"
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label d-block">Event Photo</label>
+                    <ImageUploader
+                      onImageUploaded={(url) => setFormData(prev => ({ ...prev, eventPhotoURL: url }))}
+                      existingImageUrl={formData.eventPhotoURL}
+                      path={`users/${user?.id}/events`}
+                      buttonText="Upload Event Photo"
+                    />
+                  </div>
+                </div>
+
                 <div className="flex justify-end space-x-3">
                   <button
                     type="button"
@@ -424,11 +470,47 @@ const GiftManager: React.FC = () => {
                 <li key={gift.id}>
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-indigo-600 truncate">{gift.name}</p>
-                        <p className="mt-1 text-sm text-gray-500">
-                          From: {gift.giver} • {gift.occasion} • {new Date(gift.date).toLocaleDateString()}
-                        </p>
+                      <div className="col-md-4 d-flex">
+                        {gift.photoURL && (
+                          <div className="me-3">
+                            <img 
+                              src={gift.photoURL} 
+                              alt={gift.name} 
+                              className="img-thumbnail" 
+                              style={{ width: '75px', height: '75px', objectFit: 'cover' }}
+                            />
+                          </div>
+                        )}
+                        <div>
+                          <strong>{gift.name}</strong>
+                          <div className="text-muted d-flex align-items-center">
+                            {gift.giverPhotoURL && (
+                              <img 
+                                src={gift.giverPhotoURL} 
+                                alt={gift.giver} 
+                                className="rounded-circle me-1" 
+                                style={{ width: '20px', height: '20px', objectFit: 'cover' }}
+                              />
+                            )}
+                            <span>From: {gift.giver}</span>
+                          </div>
+                          <div className="text-muted small">
+                            {gift.occasion} - {gift.date}
+                            {gift.eventPhotoURL && (
+                              <img 
+                                src={gift.eventPhotoURL} 
+                                alt={gift.occasion} 
+                                className="rounded ms-1" 
+                                style={{ width: '20px', height: '20px', objectFit: 'cover' }}
+                              />
+                            )}
+                          </div>
+                          {gift.price > 0 && (
+                            <div className="small text-primary">
+                              ${gift.price.toFixed(2)}
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="ml-4 flex-shrink-0 flex items-center space-x-2">
                         {gift.price > 0 && (

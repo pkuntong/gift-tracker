@@ -4,9 +4,20 @@
  */
 
 interface EnvVars {
-  VITE_API_URL: string;
+  // Firebase Configuration
+  VITE_FIREBASE_API_KEY: string;
+  VITE_FIREBASE_AUTH_DOMAIN: string;
+  VITE_FIREBASE_PROJECT_ID: string;
+  VITE_FIREBASE_STORAGE_BUCKET: string;
+  VITE_FIREBASE_MESSAGING_SENDER_ID: string;
+  VITE_FIREBASE_APP_ID: string;
+  VITE_FIREBASE_MEASUREMENT_ID?: string;
+  
+  // Stripe Configuration
   VITE_STRIPE_PUBLIC_KEY?: string;
   VITE_STRIPE_SECRET_KEY?: string;
+  
+  // Analytics
   VITE_ANALYTICS_ID?: string;
 }
 
@@ -19,7 +30,14 @@ export function validateEnv(): EnvVars {
   const env: Partial<EnvVars> = {};
   
   // Required variables
-  const requiredVars = ['VITE_API_URL'];
+  const requiredVars = [
+    'VITE_FIREBASE_API_KEY',
+    'VITE_FIREBASE_AUTH_DOMAIN',
+    'VITE_FIREBASE_PROJECT_ID',
+    'VITE_FIREBASE_STORAGE_BUCKET',
+    'VITE_FIREBASE_MESSAGING_SENDER_ID',
+    'VITE_FIREBASE_APP_ID'
+  ];
   
   // Optional variables
   const optionalVars = [

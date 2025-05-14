@@ -1,12 +1,13 @@
 # Gift Tracker
 
-A modern web application to help you manage gift-giving occasions and track your gift ideas.
+A modern web application to help you manage gift-giving occasions and track your gift ideas, integrated with Firebase for backend services.
 
 ## Features
 
 - 🎁 Track gift ideas for friends and family
 - 📅 Manage upcoming gift-giving occasions
-- 👤 User authentication and profile management
+- 👤 User authentication and profile management with Firebase Auth
+- 🔥 Real-time data synchronization with Firestore
 - 💳 Secure payment processing with Stripe
 - 📱 Responsive design for all devices
 
@@ -28,8 +29,13 @@ npm install
 cp .env.example .env
 ```
 
-Edit `.env` with your configuration:  
-- `VITE_API_URL`: Backend API URL (required)
+Edit `.env` with your Firebase configuration:  
+- `VITE_FIREBASE_API_KEY`: Your Firebase API key
+- `VITE_FIREBASE_AUTH_DOMAIN`: Your Firebase auth domain
+- `VITE_FIREBASE_PROJECT_ID`: Your Firebase project ID
+- `VITE_FIREBASE_STORAGE_BUCKET`: Your Firebase storage bucket
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`: Your Firebase messaging sender ID
+- `VITE_FIREBASE_APP_ID`: Your Firebase app ID
 - `VITE_STRIPE_PUBLIC_KEY`: Stripe public key for payment processing (optional)
 - `VITE_STRIPE_SECRET_KEY`: Stripe secret key (optional)
 - `VITE_ANALYTICS_ID`: Analytics tracking ID (optional)
@@ -41,22 +47,16 @@ Edit `.env` with your configuration:
 npm run dev
 ```
 
-5. Start the mock API server (for development)
-```bash
-npm run mock-api
-```
-
 ## Tech Stack
 
 - React + TypeScript
 - Vite
+- Firebase (Authentication, Firestore, Storage)
 - Tailwind CSS
-- Stripe
-- Express (Mock API)
+- Stripe integration
 
 ## E-Commerce Integrations
 
-- <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Etsy_logo_small.svg" alt="Etsy Logo" width="20" height="20"> Etsy - Integration for handmade and vintage items
 
 ## Contributing
 
