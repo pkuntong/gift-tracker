@@ -16,6 +16,7 @@ export default defineConfig({
   ],
   root: '.',
   base: '/',
+
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -32,19 +33,19 @@ export default defineConfig({
   // Copy service worker and manifest to dist folder during build
   publicDir: 'public',
   server: {
-    port: 3000,
+    port: 5173,
     open: true,
+    strictPort: false, // Allow Vite to try different ports if 5173 is in use
     // Security measures for development
     fs: {
-      strict: true,
-      allow: ['.'], // Restrict file serving to workspace root
+      strict: false, // Allow more flexible file serving
+      allow: ['.', '../node_modules'], // Allow node_modules access
       deny: ['.env', '.env.*', '*.{pem,crt,key}'], // Deny sensitive files
     },
     cors: true, // Enable CORS in development
-    hmr: {
-      protocol: 'ws',
-      host: 'localhost',
-      port: 3000
+    hmr: true, // Just use default HMR settings
+watch: {
+      usePolling: false, // Don't use polling as it can cause high CPU usage and slower response times
     }
   },
 }) 
