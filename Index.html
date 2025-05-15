@@ -21,6 +21,7 @@
     <meta name="msapplication-TileColor" content="#4f46e5">
     <meta name="theme-color" content="#6366F1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Following modern spec instead of deprecated tag -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Gift Tracker">
@@ -125,8 +126,7 @@
         }
     </style>
 
-    <!-- Import React app styles -->
-    <link rel="stylesheet" href="/src/index.css">
+    <!-- CSS is now imported directly via JavaScript in main.tsx -->
 </head>
 <body class="bg-slate-50 text-gray-800 antialiased">
     <!-- Root element for React to mount to -->
@@ -134,20 +134,23 @@
     
     <!-- Import React app entry point -->
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- PWA Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(function(registration) {
-                        console.log('Service Worker registered with scope:', registration.scope);
-                    })
-                    .catch(function(error) {
-                        console.error('Service Worker registration failed:', error);
-                    });
-            });
-        }
+<!-- PWA Service Worker Registration - Temporarily disabled -->
+<script>
+    // Service worker disabled during development
+   // TODO: Re-enable service worker for production deployment
+    // if ('serviceWorker' in navigator) {
+   // TODO: Re-enable service worker for production deployment
+    // if ('serviceWorker' in navigator) {
+        //     window.addEventListener('load', function() {
+        //         navigator.serviceWorker.register('/service-worker.js')
+        //             .then(function(registration) {
+        //                 console.log('Service Worker registered with scope:', registration.scope);
+        //             })
+        //             .catch(function(error) {
+        //                 console.error('Service Worker registration failed:', error);
+        //             });
+        //     });
+        // }
     </script>
 </body>
 </html>
