@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Navigate, Link, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import UserProfile from './UserProfile';
 import GiftManager from './GiftManager';
 import EventManager from './EventManager';
+import ThankYouTracker from './ThankYouTracker';
+import GiftHistory from './GiftHistory';
+import GuestManager from './GuestManager';
 
-type TabType = 'profile' | 'gifts' | 'events';
+type TabType = 'gifts' | 'events' | 'profile' | 'thank-you' | 'gift-history' | 'guests' | 
+               'reminders' | 'reports' | 'wishlist' | 'collaborators' | 'dashboard';
 
 const Dashboard: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<TabType>('gifts');
-  const location = useLocation();
   
-  const isActive = (path: string) => location.pathname === path;
-
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
@@ -26,9 +27,30 @@ const Dashboard: React.FC = () => {
         return <GiftManager />;
       case 'events':
         return <EventManager />;
+      case 'thank-you':
+        return <ThankYouTracker />;
+      case 'gift-history':
+        return <GiftHistory />;
+      case 'guests':
+        return <GuestManager />;
+      case 'reminders':
+        return <div>Reminders Component</div>;
+      case 'reports':
+        return <div>Reports Component</div>;
+      case 'wishlist':
+        return <div>Wishlist Component</div>;
+      case 'collaborators':
+        return <div>Collaborators Component</div>;
+      case 'dashboard':
       default:
         return <GiftManager />;
     }
+  };
+
+  // Handle tab switching
+  const handleTabClick = (tab: TabType) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    setActiveTab(tab);
   };
 
   return (
@@ -37,122 +59,142 @@ const Dashboard: React.FC = () => {
       <nav className="bg-white shadow h-screen fixed left-0 w-64 flex flex-col">
         {/* Logo Section */}
         <div className="py-6 px-4 border-b border-gray-200">
-          <Link to="/dashboard" className="text-xl font-bold text-indigo-600">
+          <a 
+            href="#" 
+            onClick={handleTabClick('dashboard')} 
+            className="text-xl font-bold text-indigo-600"
+          >
             Gift Tracker
-          </Link>
+          </a>
         </div>
         
         {/* Navigation Links */}
         <div className="flex-grow py-6 px-4 space-y-4">
-          <Link
-            to="/dashboard"
+          <a
+            href="#"
+            onClick={handleTabClick('dashboard')}
             className={`${
-              isActive('/dashboard')
+              activeTab === 'dashboard'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Dashboard
-          </Link>
-          <Link
-            to="/gifts"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('gifts')}
             className={`${
-              isActive('/gifts')
+              activeTab === 'gifts'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Gifts
-          </Link>
-          <Link
-            to="/events"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('events')}
             className={`${
-              isActive('/events')
+              activeTab === 'events'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Events
-          </Link>
-          <Link
-            to="/thank-you"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('thank-you')}
             className={`${
-              isActive('/thank-you')
+              activeTab === 'thank-you'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Thank You Tracker
-          </Link>
-          <Link
-            to="/gift-history"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('gift-history')}
             className={`${
-              isActive('/gift-history')
+              activeTab === 'gift-history'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             History
-          </Link>
-          <Link
-            to="/guests"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('guests')}
             className={`${
-              isActive('/guests')
+              activeTab === 'guests'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Guests
-          </Link>
-          <Link
-            to="/reminders"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('reminders')}
             className={`${
-              isActive('/reminders')
+              activeTab === 'reminders'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Reminders
-          </Link>
-          <Link
-            to="/reports"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('reports')}
             className={`${
-              isActive('/reports')
+              activeTab === 'reports'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Reports
-          </Link>
-          <Link
-            to="/wishlist"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('wishlist')}
             className={`${
-              isActive('/wishlist')
+              activeTab === 'wishlist'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Wishlist
-          </Link>
-          <Link
-            to="/collaborators"
+          </a>
+          <a
+            href="#"
+            onClick={handleTabClick('collaborators')}
             className={`${
-              isActive('/collaborators')
+              activeTab === 'collaborators'
                 ? 'bg-indigo-50 text-indigo-600'
                 : 'text-gray-700 hover:bg-gray-100'
             } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
           >
             Collaborators
-          </Link>
+          </a>
         </div>
         
         {/* User Profile and Logout Section */}
         <div className="py-4 px-4 border-t border-gray-200">
           <div className="flex flex-col space-y-3">
-            <span className="text-gray-700 text-sm font-medium">{user?.name}</span>
+            <a 
+              href="#"
+              onClick={handleTabClick('profile')}
+              className="text-gray-700 text-sm font-medium hover:text-indigo-600"
+            >
+              {user?.name || 'Profile'}
+            </a>
             <button
               onClick={logout}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full"
+              className="logout-button bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full"
             >
               Logout
             </button>
@@ -166,40 +208,6 @@ const Dashboard: React.FC = () => {
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           </div>
-          
-          {/* Tab navigation */}
-          <div className="flex space-x-8 border-b border-gray-200 mb-6">
-            <button
-              onClick={() => setActiveTab('gifts')}
-              className={`${
-                activeTab === 'gifts'
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              } pb-4 pt-2 px-1 border-b-2 text-sm font-medium`}
-            >
-              Gifts
-            </button>
-            <button
-              onClick={() => setActiveTab('events')}
-              className={`${
-                activeTab === 'events'
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              } pb-4 pt-2 px-1 border-b-2 text-sm font-medium`}
-            >
-              Events
-            </button>
-            <button
-              onClick={() => setActiveTab('profile')}
-              className={`${
-                activeTab === 'profile'
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              } pb-4 pt-2 px-1 border-b-2 text-sm font-medium`}
-            >
-              Profile
-            </button>
-          </div>
 
           {/* Tab content */}
           <div className="bg-white shadow rounded-lg p-6">
@@ -211,4 +219,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard; 
+export default Dashboard;
