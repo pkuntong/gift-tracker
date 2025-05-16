@@ -35,12 +35,6 @@ const Home: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center">
-              <Link
-                to="/contact"
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Contact
-              </Link>
               {user ? (
                 <Link
                   to="/dashboard"
@@ -75,22 +69,6 @@ const Home: React.FC = () => {
                   <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl">
                     The perfect solution for organizing gifts, tracking thank-you notes, and planning events. Keep everything in one place and make gift management simple.
                   </p>
-                  
-                  <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row justify-center gap-4">
-                    <button
-                      onClick={handleGetStarted}
-                      className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                    >
-                      Try Free for 14 Days
-                    </button>
-                    <button
-                      onClick={handleSeeDemo}
-                      className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
-                    >
-                      See Demo
-                    </button>
-                  </div>
-                  <p className="mt-3 text-sm text-gray-500">No credit card required</p>
                 </div>
               </main>
             </div>

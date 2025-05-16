@@ -176,7 +176,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
                       Install App
                     </button>
                   )}
-                  <span className="text-gray-700 mr-4">{user?.email}</span>
+                  <span className="text-gray-700 mr-4">{user?.name}</span>
                   <button
                     onClick={logout}
                     className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
