@@ -1,133 +1,162 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-const Navigation: React.FC = () => {
-  const { user, logout } = useAuth();
-  const location = useLocation();
+interface NavigationProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
 
-  const isActive = (path: string) => location.pathname === path;
+const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
+  const { user, logout } = useAuth();
+
+  // Function to check if a tab is active
+  const isActive = (tab: string) => activeTab === tab;
+  
+  // Function to handle tab click
+  const handleTabClick = (tab: string) => (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent default link behavior
+    setActiveTab(tab);
+  };
 
   return (
     <nav className="bg-white shadow h-screen fixed left-0 w-64 flex flex-col">
       {/* Logo Section */}
       <div className="py-6 px-4 border-b border-gray-200">
-        <Link to="/dashboard" className="text-xl font-bold text-indigo-600">
+        <span 
+          onClick={handleTabClick('dashboard')} 
+          className="text-xl font-bold text-indigo-600 cursor-pointer"
+        >
           Gift Tracker
-        </Link>
+        </span>
       </div>
       
       {/* Navigation Links */}
       <div className="flex-grow py-6 px-4 space-y-4">
-        <Link
-          to="/dashboard"
+        <a
+          href="#"
+          onClick={handleTabClick('dashboard')}
           className={`${
-            isActive('/dashboard')
+            isActive('dashboard')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Dashboard
-        </Link>
-        <Link
-          to="/gifts"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('gifts')}
           className={`${
-            isActive('/gifts')
+            isActive('gifts')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Gifts
-        </Link>
-        <Link
-          to="/events"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('events')}
           className={`${
-            isActive('/events')
+            isActive('events')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Events
-        </Link>
-        <Link
-          to="/thank-you"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('thank-you')}
           className={`${
-            isActive('/thank-you')
+            isActive('thank-you')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Thank You Tracker
-        </Link>
-        <Link
-          to="/history"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('gift-history')}
           className={`${
-            isActive('/history')
+            isActive('gift-history')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           History
-        </Link>
-        <Link
-          to="/guests"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('guests')}
           className={`${
-            isActive('/guests')
+            isActive('guests')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Guests
-        </Link>
-        <Link
-          to="/reminders"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('reminders')}
           className={`${
-            isActive('/reminders')
+            isActive('reminders')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Reminders
-        </Link>
-        <Link
-          to="/reports"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('reports')}
           className={`${
-            isActive('/reports')
+            isActive('reports')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Reports
-        </Link>
-        <Link
-          to="/wishlist"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('wishlist')}
           className={`${
-            isActive('/wishlist')
+            isActive('wishlist')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Wishlist
-        </Link>
-        <Link
-          to="/collaborators"
+        </a>
+        <a
+          href="#"
+          onClick={handleTabClick('collaborators')}
           className={`${
-            isActive('/collaborators')
+            isActive('collaborators')
               ? 'bg-indigo-50 text-indigo-600'
               : 'text-gray-700 hover:bg-gray-100'
           } flex items-center px-3 py-3 rounded-md text-sm font-medium`}
         >
           Collaborators
-        </Link>
+        </a>
       </div>
       
       {/* User Profile and Logout Section */}
       <div className="py-4 px-4 border-t border-gray-200">
         <div className="flex flex-col space-y-3">
-          <span className="text-gray-700 text-sm font-medium">{user?.name}</span>
+          <a 
+            href="#"
+            onClick={handleTabClick('profile')}
+            className="text-gray-700 text-sm font-medium hover:text-indigo-600"
+          >
+            {user?.name}
+          </a>
           <button
             onClick={logout}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full"
+            className="logout-button bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full"
           >
             Logout
           </button>
@@ -137,4 +166,4 @@ const Navigation: React.FC = () => {
   );
 };
 
-export default Navigation; 
+export default Navigation;
