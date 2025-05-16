@@ -499,13 +499,13 @@ const GuestManager: React.FC<GuestManagerProps> = ({ eventId, showAllGuests = fa
           </div>
         ) : (
           <div className="table-responsive">
-            <table className="table table-hover mb-0">
-              <thead>
+            <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+              <thead className="bg-gray-50">
                 <tr>
-                  <th>
+                  <th scope="col" className="px-4 py-3 w-10">
                     <input
                       type="checkbox"
-                      className="form-check-input"
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                       checked={selectedGuests.length > 0 && selectedGuests.length === filteredGuests.length}
                       onChange={() => {
                         if (selectedGuests.length === filteredGuests.length) {
@@ -517,66 +517,108 @@ const GuestManager: React.FC<GuestManagerProps> = ({ eventId, showAllGuests = fa
                       disabled={isLoading || !filteredGuests.length}
                     />
                   </th>
-                  <th>Name</th>
-                  <th>Contact</th>
-                  <th>RSVP Status</th>
-                  <th>Actions</th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RSVP Status</th>
+                  <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-white divide-y divide-gray-200">
                 {filteredGuests.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="text-center py-4">
-                      {searchTerm 
-                        ? 'No guests match your search.' 
-                        : 'No guests found. Add your first guest!'}
+                    <td colSpan={5} className="px-6 py-10 text-center">
+                      <div className="flex flex-col items-center justify-center">
+                        {searchTerm ? (
+                          <>
+                            <svg className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <p className="mt-2 text-sm font-medium text-gray-900">No guests match your search.</p>
+                            <p className="text-sm text-gray-500">Try adjusting your search terms.</p>
+                          </>
+                        ) : (
+                          <>
+                            <svg className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
+                            <p className="mt-2 text-sm font-medium text-gray-900">No guests found.</p>
+                            <p className="text-sm text-gray-500">Add your first guest!</p>
+                            <button 
+                              onClick={() => setIsAddingGuest(true)}
+                              className="mt-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                              <svg className="-ml-0.5 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
+                              </svg>
+                              Add Guest
+                            </button>
+                          </>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ) : (
                   filteredGuests.map(guest => (
-                    <tr key={guest.id}>
-                      <td>
+                    <tr key={guest.id} className="hover:bg-gray-50 transition-colors duration-150">
+                      <td className="px-4 py-4">
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                           checked={selectedGuests.includes(guest.id!)}
                           onChange={() => handleBulkSelect(guest.id!)}
                           disabled={isLoading}
                         />
                       </td>
-                      <td>
-                        <div className="fw-bold">{guest.name}</div>
-                        {guest.address && (
-                          <small className="text-muted d-block">{guest.address}</small>
-                        )}
+                      <td className="px-4 py-4">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-medium">
+                            {guest.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="ml-3">
+                            <div className="text-sm font-medium text-gray-900">{guest.name}</div>
+                            {guest.address && (
+                              <div className="text-xs text-gray-500 flex items-center mt-1">
+                                <svg className="h-3 w-3 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                {guest.address}
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </td>
-                      <td>
-                        {guest.email && (
-                          <div>
-                            <small>
-                              <i className="bi bi-envelope me-1"></i>
+                      <td className="px-4 py-4">
+                        <div className="space-y-1">
+                          {guest.email && (
+                            <div className="text-xs text-gray-600 flex items-center">
+                              <svg className="h-3 w-3 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
                               {guest.email}
-                            </small>
-                          </div>
-                        )}
-                        {guest.phone && (
-                          <div>
-                            <small>
-                              <i className="bi bi-telephone me-1"></i>
+                            </div>
+                          )}
+                          {guest.phone && (
+                            <div className="text-xs text-gray-600 flex items-center">
+                              <svg className="h-3 w-3 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                              </svg>
                               {guest.phone}
-                            </small>
-                          </div>
-                        )}
+                            </div>
+                          )}
+                        </div>
                       </td>
-                      <td>
+                      <td className="px-4 py-4">
+                        <div className="mb-2">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${guest.rsvpStatus === 'confirmed' ? 'bg-green-100 text-green-800' : guest.rsvpStatus === 'declined' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                            <svg className="-ml-0.5 mr-1.5 h-2 w-2 ${guest.rsvpStatus === 'confirmed' ? 'text-green-400' : guest.rsvpStatus === 'declined' ? 'text-red-400' : 'text-yellow-400'}" fill="currentColor" viewBox="0 0 8 8">
+                              <circle cx="4" cy="4" r="3" />
+                            </svg>
+                            {guest.rsvpStatus === 'confirmed' ? 'Attending' : guest.rsvpStatus === 'declined' ? 'Not Attending' : 'Pending'}
+                          </span>
+                        </div>
                         <select
-                          className={`form-select form-select-sm ${
-                            guest.rsvpStatus === 'confirmed' 
-                              ? 'text-success' 
-                              : guest.rsvpStatus === 'declined' 
-                                ? 'text-danger' 
-                                : ''
-                          }`}
+                          className="block w-full text-xs border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                           value={guest.rsvpStatus}
                           onChange={(e) => handleRSVPChange(guest.id!, e.target.value as 'pending' | 'confirmed' | 'declined')}
                           disabled={isLoading}
@@ -586,19 +628,25 @@ const GuestManager: React.FC<GuestManagerProps> = ({ eventId, showAllGuests = fa
                           <option value="declined">Not Attending</option>
                         </select>
                       </td>
-                      <td>
+                      <td className="px-4 py-4 text-right space-x-1">
                         <button
-                          className="btn btn-sm btn-outline-primary me-1"
+                          className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                           onClick={() => handleEdit(guest)}
                           disabled={isLoading}
                         >
+                          <svg className="h-3 w-3 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          </svg>
                           Edit
                         </button>
                         <button
-                          className="btn btn-sm btn-outline-danger"
+                          className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                           onClick={() => handleDelete(guest.id!)}
                           disabled={isLoading}
                         >
+                          <svg className="h-3 w-3 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
                           Delete
                         </button>
                       </td>

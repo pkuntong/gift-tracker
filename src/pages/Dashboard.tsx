@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import GiftManager from '../components/GiftManager';
 import Navigation from '../components/Navigation';
+import DashboardReminders from '../components/DashboardReminders';
 
 // Import or create placeholder components for different tabs
 // These are temporary placeholders - you should replace with actual components
@@ -36,7 +37,7 @@ const GuestManager: React.FC = () => (
 const Reminders: React.FC = () => (
   <div>
     <h2 className="text-2xl font-medium mb-4">Reminders</h2>
-    <p>Set and manage your reminders here.</p>
+    <DashboardReminders />
   </div>
 );
 
@@ -99,7 +100,24 @@ const Dashboard: React.FC = () => {
         return (
           <div>
             <h2 className="text-2xl font-medium mb-4">Dashboard Overview</h2>
-            <p>Welcome to your dashboard. Use the tabs to navigate between sections.</p>
+            <p className="mb-6">Welcome to your dashboard. Use the tabs to navigate between sections.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+              <div className="bg-white shadow rounded-lg p-6 border border-gray-200">
+                <DashboardReminders />
+              </div>
+              
+              {/* Additional dashboard cards can be added here */}
+              <div className="bg-white shadow rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Gifts</h3>
+                <p className="text-gray-500">Your recent gift activity will appear here.</p>
+              </div>
+              
+              <div className="bg-white shadow rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Upcoming Events</h3>
+                <p className="text-gray-500">Your upcoming events will appear here.</p>
+              </div>
+            </div>
           </div>
         );
     }
