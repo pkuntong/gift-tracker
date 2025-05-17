@@ -6,7 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { env } from '../utils/env';
 
-const stripePromise = loadStripe(env.VITE_STRIPE_PUBLIC_KEY);
+const stripePromise = loadStripe(env.VITE_STRIPE_PUBLIC_KEY || '');
 
 interface CheckoutFormProps {
   clientSecret: string;

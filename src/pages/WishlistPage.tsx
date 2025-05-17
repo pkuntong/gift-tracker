@@ -157,6 +157,7 @@ const WishlistPage: React.FC = () => {
   // Delete wishlist item
   const handleDeleteItem = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
+    if (!user) return;
     
     try {
       await deleteWishlistItem(id);
@@ -170,6 +171,8 @@ const WishlistPage: React.FC = () => {
   
   // Mark item as purchased
   const handleMarkPurchased = async (id: string) => {
+    if (!user) return;
+    
     try {
       await markItemPurchased(id, user.id);
       
