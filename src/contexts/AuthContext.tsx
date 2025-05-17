@@ -3,6 +3,7 @@ import { onAuthStateChanged, getAuth, applyActionCode } from 'firebase/auth';
 import { User } from '../types/user';
 import { auth } from '../firebase/config';
 import * as authService from '../firebase/auth-service';
+import { mapFirebaseUser } from '../firebase/auth-service';
 
 // Define types
 interface AuthContextType {
@@ -154,10 +155,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Update the user state with the new verification status
       const updatedUser = auth.currentUser;
       if (updatedUser) {
-        setUser({
-          ...user,
-          emailVerified: updatedUser.emailVerified
-        });
+        setUser(mapFirebaseUser(updatedUser));
       }
 
       setIsLoading(false);
