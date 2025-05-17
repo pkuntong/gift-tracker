@@ -26,12 +26,18 @@ export const createReminder = async (reminder: Omit<Reminder, 'id' | 'createdAt'
     
     if (!user) {
       console.error('User must be logged in to create a reminder');
-      return null;
+      throw new Error('User must be logged in to create a reminder');
     }
     
-    const reminderData: Omit<Reminder, 'id'> = {
+    if (!reminder.title || !reminder.message || !reminder.triggerDate) {
+      console.error('Missing required fields:', { reminder });
+      throw new Error('Missing required fields');
+    }
+
+    // Create the reminder data with the current user's ID
+    const reminderData = {
       ...reminder,
-      userId: user.uid,
+      userId: user.uid, // Always use the current user's ID
       status: 'pending',
       createdAt: new Date(),
     };
@@ -43,11 +49,22 @@ export const createReminder = async (reminder: Omit<Reminder, 'id' | 'createdAt'
       createdAt: Timestamp.fromDate(reminderData.createdAt),
     };
     
-    const docRef = await addDoc(collection(db, 'reminders'), firestoreReminder);
-    return docRef.id;
+    console.log('Creating reminder with data:', firestoreReminder);
+    
+    try {
+      const docRef = await addDoc(collection(db, 'reminders'), firestoreReminder);
+      console.log('Reminder created successfully with ID:', docRef.id);
+      return docRef.id;
+    } catch (firestoreError) {
+      console.error('Firestore error creating reminder:', firestoreError);
+      throw new Error('Failed to save reminder to database');
+    }
   } catch (error) {
     console.error('Error creating reminder:', error);
-    return null;
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('Failed to create reminder');
   }
 };
 

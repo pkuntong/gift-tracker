@@ -51,12 +51,20 @@ const Home: React.FC = () => {
                   </button>
                 </>
               ) : (
-                <Link
-                  to="/login"
-                  className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                >
-                  Sign In
-                </Link>
+                <div className="flex space-x-4">
+                  <Link
+                    to="/login"
+                    className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
               )}
             </div>
           </div>

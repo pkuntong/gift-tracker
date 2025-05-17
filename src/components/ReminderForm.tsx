@@ -34,8 +34,8 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
         message: initialData.message || '',
         date: triggerDate.toISOString().split('T')[0],
         time: `${String(triggerDate.getHours()).padStart(2, '0')}:${String(triggerDate.getMinutes()).padStart(2, '0')}`,
-        type: initialData.type as 'gift-logging' | 'thank-you' | 'custom' || 'custom',
-        repeat: initialData.repeat as 'none' | 'daily' | 'weekly' | 'monthly' || 'none'
+        type: initialData.type || 'custom',
+        repeat: initialData.repeat || 'none'
       });
     }
   }, [initialData]);
@@ -51,10 +51,10 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
     
     try {
       setIsSubmitting(true);
+      setError(null);
       
       if (!formData.title || !formData.message || !formData.date) {
         setError('Please fill all required fields');
-        setIsSubmitting(false);
         return;
       }
 
@@ -66,23 +66,40 @@ const ReminderForm: React.FC<ReminderFormProps> = ({
       // Check if date is in the future
       if (triggerDate <= new Date()) {
         setError('Please select a future date and time');
-        setIsSubmitting(false);
         return;
       }
 
+      console.log('Submitting reminder with data:', {
+        title: formData.title.trim(),
+        message: formData.message.trim(),
+        triggerDate,
+        type: formData.type,
+        repeat: formData.repeat
+      });
+
+      // Create the reminder data
       const reminderData = {
-        ...initialData,
-        title: formData.title,
-        message: formData.message,
+        title: formData.title.trim(),
+        message: formData.message.trim(),
         triggerDate,
         type: formData.type,
         repeat: formData.repeat
       };
 
       await onSubmit(reminderData);
+      
+      // Reset form after successful submission
+      setFormData({
+        title: '',
+        message: '',
+        date: '',
+        time: '10:00',
+        type: 'custom',
+        repeat: 'none'
+      });
     } catch (err) {
-      setError('Failed to save reminder');
-      console.error(err);
+      console.error('Error in ReminderForm submit:', err);
+      setError(err instanceof Error ? err.message : 'Failed to save reminder');
     } finally {
       setIsSubmitting(false);
     }
