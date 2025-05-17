@@ -3,7 +3,7 @@ import { env } from '../utils/env';
 import { transformError, ApiError, isApiError, getUserFriendlyErrorMessage } from '../utils/api-error';
 
 // API base URL from validated environment variables
-let API_BASE_URL = env.VITE_API_URL;
+let API_BASE_URL = env.VITE_API_URL || '';
 
 // Create axios instance with default config
 const api = axios.create({
