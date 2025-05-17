@@ -19,6 +19,9 @@ interface EnvVars {
   
   // Analytics
   VITE_ANALYTICS_ID?: string;
+
+  // API URL
+  VITE_API_URL?: string;
 }
 
 /**
@@ -43,7 +46,8 @@ export function validateEnv(): EnvVars {
   const optionalVars = [
     'VITE_STRIPE_PUBLIC_KEY',
     'VITE_STRIPE_SECRET_KEY',
-    'VITE_ANALYTICS_ID'
+    'VITE_ANALYTICS_ID',
+    'VITE_API_URL'
   ];
 
   // Check required variables
