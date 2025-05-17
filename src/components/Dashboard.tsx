@@ -20,32 +20,14 @@ const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [showNewReminderForm, setShowNewReminderForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [reminders, setReminders] = useState<Reminder[]>([]);
-  const [loading, setLoading] = useState(true);
   
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  useEffect(() => {
-    const loadReminders = async () => {
-      try {
-        const userReminders = await getUserReminders();
-        setReminders(userReminders);
-      } catch (err) {
-        console.error('Error loading reminders:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadReminders();
-  }, []);
-
   const handleCreateReminder = async (reminderData: Partial<Reminder>) => {
     try {
       setError(null);
-      setLoading(true);
 
       console.log('Dashboard: Creating reminder with data:', reminderData);
 
@@ -87,13 +69,10 @@ const Dashboard: React.FC = () => {
       // Reload reminders
       const userReminders = await getUserReminders();
       console.log('Dashboard: Loaded reminders:', userReminders);
-      setReminders(userReminders);
       setShowNewReminderForm(false);
     } catch (err) {
       console.error('Dashboard: Error creating reminder:', err);
       setError(err instanceof Error ? err.message : 'Failed to create reminder. Please try again.');
-    } finally {
-      setLoading(false);
     }
   };
 

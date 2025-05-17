@@ -15,10 +15,6 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleSeeDemo = () => {
-    navigate('/dashboard');
-  };
-
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}

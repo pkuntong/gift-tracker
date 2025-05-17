@@ -23,7 +23,8 @@ const mapFirebaseUser = (firebaseUser: FirebaseUser): User => ({
   name: firebaseUser.displayName || 'User',
   createdAt: firebaseUser.metadata.creationTime || new Date().toISOString(),
   updatedAt: firebaseUser.metadata.lastSignInTime || new Date().toISOString(),
-  photoURL: firebaseUser.photoURL || undefined
+  photoURL: firebaseUser.photoURL || undefined,
+  emailVerified: firebaseUser.emailVerified
 });
 
 // Sign up new user

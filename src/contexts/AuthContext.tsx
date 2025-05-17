@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, getAuth, applyActionCode } from 'firebase/auth';
 import { User } from '../types/user';
 import { auth } from '../firebase/config';
 import * as authService from '../firebase/auth-service';
@@ -41,7 +41,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           email: firebaseUser.email || '',
           name: firebaseUser.displayName || 'User',
           createdAt: firebaseUser.metadata.creationTime || new Date().toISOString(),
-          updatedAt: firebaseUser.metadata.lastSignInTime || new Date().toISOString()
+          updatedAt: firebaseUser.metadata.lastSignInTime || new Date().toISOString(),
+          emailVerified: firebaseUser.emailVerified
         };
         setUser(mappedUser);
       } else {
@@ -137,9 +138,28 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(true);
     setError(null);
     try {
-      // In Firebase, verifying email is handled differently - the token comes from the email link
-      // Here we're just applying the verification code
-      await authService.updateUserProfile(user?.name || 'User'); // Just trigger a profile update to refresh
+      const auth = getAuth();
+      const user = auth.currentUser;
+      
+      if (!user) {
+        throw new Error('No user is currently signed in');
+      }
+
+      // Apply the email verification code
+      await applyActionCode(auth, token);
+      
+      // Reload the user to get updated email verification status
+      await user.reload();
+      
+      // Update the user state with the new verification status
+      const updatedUser = auth.currentUser;
+      if (updatedUser) {
+        setUser({
+          ...user,
+          emailVerified: updatedUser.emailVerified
+        });
+      }
+
       setIsLoading(false);
     } catch (error) {
       const err = error as Error;

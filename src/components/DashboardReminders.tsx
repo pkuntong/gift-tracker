@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Reminder, getUserReminders } from '../firebase/notification-service';
 import ReminderCard from './ReminderCard';
-import ReminderForm from './ReminderForm';
 
 interface DashboardRemindersProps {
   onAddReminder?: () => void;
@@ -12,7 +10,6 @@ const DashboardReminders: React.FC<DashboardRemindersProps> = ({ onAddReminder }
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [showNewReminderForm, setShowNewReminderForm] = useState(false);
 
   useEffect(() => {
     const loadReminders = async () => {
