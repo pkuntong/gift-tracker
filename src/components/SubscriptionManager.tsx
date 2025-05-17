@@ -7,7 +7,7 @@ import { Elements, CardElement, useStripe, useElements } from '@stripe/react-str
 import { env } from '../utils/env';
 import type { SubscriptionData } from '../firebase/payment-service';
 
-const stripePromise = loadStripe(env.VITE_STRIPE_PUBLIC_KEY);
+const stripePromise = loadStripe(env.VITE_STRIPE_PUBLIC_KEY || '');
 
 interface SubscribeFormProps {
   priceId: string;
@@ -40,6 +40,10 @@ const SubscribeForm: React.FC<SubscribeFormProps> = ({ priceId, onSuccess, onCan
 
       // Create the subscription
       const { clientSecret, subscriptionId } = await createSubscription(user.id, priceId);
+      
+      if (!subscriptionId) {
+        throw new Error('Failed to create subscription: No subscription ID returned');
+      }
 
       // Confirm the setup with Stripe
       const { error: setupError } = await stripe.confirmCardSetup(clientSecret, {
@@ -236,9 +240,9 @@ const ActiveSubscriptions: React.FC<{
                   Created: {new Date(subscription.createdAt).toLocaleDateString()}
                 </p>
               </div>
-              {subscription.status === 'active' && (
+              {subscription.status === 'active' && subscription.subscriptionId && (
                 <button
-                  onClick={() => onCancel(subscription.subscriptionId || '')}
+                  onClick={() => onCancel(subscription.subscriptionId)}
                   className="bg-red-50 hover:bg-red-100 text-red-700 py-1 px-3 rounded text-sm"
                 >
                   Cancel
@@ -290,7 +294,7 @@ const SubscriptionManager: React.FC = () => {
   };
 
   const handleCancelSubscription = async (subscriptionId: string) => {
-    if (!user || !subscriptionId) return;
+    if (!user) return;
     
     if (!window.confirm('Are you sure you want to cancel this subscription?')) {
       return;

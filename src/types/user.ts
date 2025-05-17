@@ -5,4 +5,5 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   photoURL?: string;
+  emailVerified?: boolean;
 } 

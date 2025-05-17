@@ -22,7 +22,7 @@ export type SubscriptionData = {
   userId: string;
   priceId: string;
   status: 'active' | 'canceled' | 'past_due';
-  subscriptionId?: string;
+  subscriptionId: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -102,6 +102,7 @@ export const createSubscription = async (userId: string, priceId: string): Promi
       userId,
       priceId,
       status: 'active',
+      subscriptionId: `sub_${Math.random().toString(36).substring(2)}`,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -127,16 +128,15 @@ export const createSubscription = async (userId: string, priceId: string): Promi
     // const { subscriptionId, clientSecret } = await response.json();
     
     // For development purposes, generate mock values
-    const subscriptionId = `sub_${Math.random().toString(36).substring(2)}`;
     const clientSecret = `cs_${Math.random().toString(36).substring(2)}`;
     
     // Update Firestore with subscription ID
     await updateDoc(doc(db, 'subscriptions', subscriptionRef.id), {
-      subscriptionId,
+      subscriptionId: subscriptionData.subscriptionId,
       updatedAt: new Date().toISOString()
     });
     
-    return { subscriptionId, clientSecret };
+    return { subscriptionId: subscriptionData.subscriptionId, clientSecret };
   } catch (error) {
     console.error('Error creating subscription:', error);
     throw error;
