@@ -35,5 +35,12 @@ service cloud.firestore {
       allow create: if hasValidUserId();
       allow update, delete: if isOwner(resource);
     }
+
+    // Reminders collection - users can only access their own reminders
+    match /reminders/{reminderId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if hasValidUserId();
+      allow update, delete: if isOwner(resource);
+    }
   }
 }

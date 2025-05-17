@@ -95,6 +95,42 @@ const RemindersPage: React.FC = () => {
     }
   };
 
+  const handleCreateReminder = async (reminderData: Partial<Reminder>) => {
+    try {
+      setError(null);
+      const reminderId = await createReminder({
+        title: reminderData.title || '',
+        message: reminderData.message || '',
+        triggerDate: reminderData.triggerDate || new Date(),
+        type: reminderData.type || 'custom',
+        repeat: reminderData.repeat || 'none',
+        userId: '' // This will be set in createReminder
+      });
+
+      if (!reminderId) {
+        throw new Error('Failed to create reminder');
+      }
+
+      // Reload reminders
+      const userReminders = await getUserReminders();
+      setReminders(userReminders);
+      setShowNewReminderForm(false);
+      
+      // Reset form
+      setNewReminder({
+        title: '',
+        message: '',
+        date: '',
+        time: '10:00',
+        type: 'custom',
+        repeat: 'none'
+      });
+    } catch (err) {
+      setError('Failed to create reminder. Please try again.');
+      console.error(err);
+    }
+  };
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -152,39 +188,7 @@ const RemindersPage: React.FC = () => {
       {showNewReminderForm && (
         <div className="mb-8">
           <ReminderForm 
-            onSubmit={async (reminderData) => {
-              try {
-                // Type assertion to satisfy TypeScript
-                const completeReminderData = {
-                  title: reminderData.title || '',
-                  message: reminderData.message || '',
-                  triggerDate: reminderData.triggerDate || new Date(),
-                  type: reminderData.type || 'custom',
-                  repeat: reminderData.repeat || 'none',
-                  userId: ''
-                };
-                
-                await createReminder(completeReminderData);
-                setShowNewReminderForm(false);
-                // Reload reminders
-                setLoading(true);
-                const userReminders = await getUserReminders();
-                setReminders(userReminders);
-                setLoading(false);
-                // Reset form
-                setNewReminder({
-                  title: '',
-                  message: '',
-                  date: '',
-                  time: '10:00',
-                  type: 'custom',
-                  repeat: 'none'
-                });
-              } catch (err) {
-                setError('Failed to create reminder');
-                console.error(err);
-              }
-            }}
+            onSubmit={handleCreateReminder}
             onCancel={() => setShowNewReminderForm(false)}
             initialData={newReminder}
           />
