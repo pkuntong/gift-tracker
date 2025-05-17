@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Tracker - Effortless Gift Tracking & Thank Yous</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Gift Tracker - Effortless Gift Tracking & Thank Yous">
+    <meta name="description" content="Track gifts, manage thank you notes, and stay organized for weddings, birthdays, baby showers, and more. The most trusted gift tracking tool for event hosts.">
+    <meta name="keywords" content="gift tracking, thank you notes, wedding gifts, baby shower gifts, event planning, gift registry, gift management">
+    <meta name="author" content="Gift Tracker">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon and PWA support -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#4f46e5">
+    <meta name="msapplication-TileColor" content="#4f46e5">
+    <meta name="theme-color" content="#6366F1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Following modern spec instead of deprecated tag -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Gift Tracker">
+    
+    <!-- Apple PWA splash screens -->
+    <link rel="apple-touch-startup-image" href="/icons/apple-splash-2048-2732.jpg" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="/icons/apple-splash-1668-2388.jpg" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="/icons/apple-splash-1536-2048.jpg" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="/icons/apple-splash-1125-2436.jpg" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="/icons/apple-splash-750-1334.jpg" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gifttracker.com/">
+    <meta property="og:title" content="Gift Tracker - Effortless Gift Tracking & Thank Yous">
+    <meta property="og:description" content="Track gifts, manage thank you notes, and stay organized for weddings, birthdays, baby showers, and more. Free gift tracking tool for event hosts.">
+    <meta property="og:image" content="https://gifttracker.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://gifttracker.com/">
+    <meta property="twitter:title" content="Gift Tracker - Effortless Gift Tracking & Thank Yous">
+    <meta property="twitter:description" content="Track gifts, manage thank you notes, and stay organized for weddings, birthdays, baby showers, and more. Free gift tracking tool for event hosts.">
+    <meta property="twitter:image" content="https://gifttracker.com/og-image.jpg">
+
+    <!-- Schema.org markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Gift Tracker",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": "Track gifts, manage thank you notes, and stay organized for weddings, birthdays, baby showers, and more.",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "342"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Gift Tracker",
+            "description": "A modern SaaS platform helping event hosts track gifts and manage thank you notes efficiently.",
+            "url": "https://gifttracker.com"
+        }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Smooth scrolling for anchor links */
+            scroll-behavior: smooth;
+        }
+        /* Subtle gradient for the hero section */
+        .hero-bg {
+             background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); /* Lighter gradient */
+        }
+        /* Call-to-action button styles */
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4); /* Indigo shadow on hover */
+        }
+        /* Enhanced card styles for features, testimonials, pricing */
+        .enhanced-card {
+             border-radius: 0.75rem; /* rounded-xl */
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+             border: 1px solid #e5e7eb; /* border-gray-200 */
+        }
+        .enhanced-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.07); /* Increased shadow */
+        }
+        /* Style for the 'Most Popular' pricing badge */
+        .popular-badge {
+             position: absolute;
+             top: -1px; /* Align with top border */
+             right: -1px; /* Align with right border */
+             background-color: #4f46e5; /* bg-indigo-600 */
+             color: white;
+             font-size: 0.75rem; /* text-xs */
+             font-weight: 600; /* font-semibold */
+             padding: 0.25rem 0.75rem; /* px-3 py-1 */
+             border-top-right-radius: 0.75rem; /* rounded-tr-xl */
+             border-bottom-left-radius: 0.75rem; /* rounded-bl-xl */
+        }
+         /* Ensure smooth scroll offset for fixed nav */
+        html {
+             scroll-padding-top: 4rem; /* Adjust based on nav height (h-16 = 4rem) */
+        }
+    </style>
+
+    <!-- CSS is now imported directly via JavaScript in main.tsx -->
+</head>
+<body class="bg-slate-50 text-gray-800 antialiased">
+    <!-- Root element for React to mount to -->
+    <div id="root"></div>
+    
+    <!-- Import React app entry point -->
+    <script type="module" src="/src/main.tsx"></script>
+<!-- PWA Service Worker Registration - Temporarily disabled -->
+<script>
+    // Service worker disabled during development
+   // TODO: Re-enable service worker for production deployment
+    // if ('serviceWorker' in navigator) {
+   // TODO: Re-enable service worker for production deployment
+    // if ('serviceWorker' in navigator) {
+        //     window.addEventListener('load', function() {
+        //         navigator.serviceWorker.register('/service-worker.js')
+        //             .then(function(registration) {
+        //                 console.log('Service Worker registered with scope:', registration.scope);
+        //             })
+        //             .catch(function(error) {
+        //                 console.error('Service Worker registration failed:', error);
+        //             });
+        //     });
+        // }
+    </script>
+</body>
+</html>
