@@ -292,51 +292,53 @@ const GuestManager: React.FC<GuestManagerProps> = ({ eventId, showAllGuests = fa
     <div className="guest-manager">
       {/* Alert messages */}
       {error && (
-        <div className="alert alert-danger mb-3" role="alert">
-          {error}
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-3 rounded flex items-center justify-between">
+          <span className="text-red-700 text-sm">{error}</span>
           <button 
             type="button" 
-            className="btn-close float-end" 
+            className="text-red-400 hover:text-red-600 ml-4" 
             onClick={() => setError(null)}
             aria-label="Close"
-          ></button>
+          >
+            &times;
+          </button>
         </div>
       )}
       
       {successMessage && (
-        <div className="alert alert-success mb-3" role="alert">
-          {successMessage}
+        <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-3 rounded flex items-center justify-between">
+          <span className="text-green-700 text-sm">{successMessage}</span>
           <button 
             type="button" 
-            className="btn-close float-end" 
+            className="text-green-400 hover:text-green-600 ml-4" 
             onClick={() => setSuccessMessage(null)}
             aria-label="Close"
-          ></button>
+          >
+            &times;
+          </button>
         </div>
       )}
       
       {/* Guest management controls */}
-      <div className="d-flex justify-content-between mb-3">
-        <div>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+        <div className="flex flex-wrap gap-2">
           <button 
-            className="btn btn-primary me-2" 
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
             onClick={() => setIsAddingGuest(true)}
             disabled={isLoading}
           >
-            Add Guest
+            + Add Guest
           </button>
-          
           <button 
-            className="btn btn-outline-primary me-2" 
+            className="bg-white border border-indigo-600 text-indigo-600 px-4 py-2 rounded-md font-medium shadow-sm hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
             onClick={handleImportClick}
             disabled={isLoading}
           >
             Import Guests
           </button>
-          
           {selectedGuests.length > 0 && (
             <button 
-              className="btn btn-danger" 
+              className="bg-red-100 text-red-700 px-4 py-2 rounded-md font-medium shadow-sm hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition"
               onClick={handleBulkDelete}
               disabled={isLoading}
             >
@@ -344,103 +346,111 @@ const GuestManager: React.FC<GuestManagerProps> = ({ eventId, showAllGuests = fa
             </button>
           )}
         </div>
-        
-        <div className="col-md-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search guests..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            disabled={isLoading}
-          />
+        <div className="w-full md:w-1/3">
+          <label htmlFor="search-guests" className="block text-sm font-medium text-gray-700 mb-1">Search Guests</label>
+          <div className="relative rounded-md shadow-sm">
+            <input
+              id="search-guests"
+              type="text"
+              className="block w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400 transition"
+              placeholder="Type a name, email, or phone..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              disabled={isLoading}
+            />
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       
       {/* Guest Form */}
       {isAddingGuest && (
-        <div className="card mb-4">
-          <div className="card-header d-flex justify-content-between align-items-center">
-            <h5 className="mb-0">{editingGuest ? 'Edit Guest' : 'Add New Guest'}</h5>
+        <div className="card mb-4 bg-white rounded-lg shadow p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h5 className="text-lg font-semibold text-gray-900">{editingGuest ? 'Edit Guest' : 'Add New Guest'}</h5>
             <button 
               type="button" 
-              className="btn-close" 
+              className="text-gray-400 hover:text-gray-600 text-2xl font-bold focus:outline-none" 
               onClick={resetForm}
               aria-label="Close"
-            ></button>
+            >
+              &times;
+            </button>
           </div>
-          <div className="card-body">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="name" className="form-label">Name *</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                />
-              </div>
-              
-              <div className="mb-3">
-                <label htmlFor="phone" className="form-label">Phone</label>
-                <input
-                  type="tel"
-                  className="form-control"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                />
-              </div>
-              
-              <div className="mb-3">
-                <label htmlFor="address" className="form-label">Address</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                />
-              </div>
-              
-              <div className="mb-3">
-                <label htmlFor="notes" className="form-label">Notes</label>
-                <textarea
-                  className="form-control"
-                  id="notes"
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleInputChange}
-                  rows={3}
-                ></textarea>
-              </div>
-              
-              <button 
-                type="submit" 
-                className="btn btn-primary" 
-                disabled={isLoading}
-              >
-                {isLoading ? 'Saving...' : (editingGuest ? 'Update Guest' : 'Add Guest')}
-              </button>
-            </form>
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label>
+              <input
+                type="text"
+                className="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400 transition"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+                placeholder="Enter guest name"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                className="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400 transition"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Enter email address"
+              />
+            </div>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+              <input
+                type="tel"
+                className="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400 transition"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Enter phone number"
+              />
+            </div>
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+              <input
+                type="text"
+                className="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400 transition"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                placeholder="Enter address"
+              />
+            </div>
+            <div>
+              <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+              <textarea
+                className="block w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400 transition"
+                id="notes"
+                name="notes"
+                value={formData.notes}
+                onChange={handleInputChange}
+                rows={3}
+                placeholder="Add any notes about this guest"
+              ></textarea>
+            </div>
+            <button 
+              type="submit" 
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition" 
+              disabled={isLoading}
+            >
+              {isLoading ? 'Saving...' : (editingGuest ? 'Update Guest' : 'Add Guest')}
+            </button>
+          </form>
         </div>
       )}
       
@@ -479,9 +489,9 @@ const GuestManager: React.FC<GuestManagerProps> = ({ eventId, showAllGuests = fa
       )}
       
       {/* Guest List */}
-      <div className="card">
-        <div className="card-header">
-          <h5 className="mb-0">
+      <div className="card rounded-lg shadow overflow-hidden">
+        <div className="card-header bg-gray-50 px-6 py-4 border-b border-gray-200">
+          <h5 className="mb-0 text-lg font-semibold text-gray-900">
             {showAllGuests 
               ? 'All Guests' 
               : eventId 
@@ -491,15 +501,16 @@ const GuestManager: React.FC<GuestManagerProps> = ({ eventId, showAllGuests = fa
         </div>
         
         {isLoading && !guests.length ? (
-          <div className="card-body text-center py-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-            <p className="mt-2">Loading guests...</p>
+          <div className="card-body text-center py-10">
+            <svg className="animate-spin h-8 w-8 text-indigo-600 mx-auto mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+            </svg>
+            <p className="mt-2 text-gray-500">Loading guests...</p>
           </div>
         ) : (
           <div className="table-responsive">
-            <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
+            <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th scope="col" className="px-4 py-3 w-10">
