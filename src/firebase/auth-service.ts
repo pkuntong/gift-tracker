@@ -17,7 +17,7 @@ import { auth, db } from './config';
 import { User } from '../types/user';
 
 // Type for mapping Firebase user to app user
-const mapFirebaseUser = (firebaseUser: FirebaseUser): User => ({
+export const mapFirebaseUser = (firebaseUser: FirebaseUser): User => ({
   id: firebaseUser.uid,
   email: firebaseUser.email || '',
   name: firebaseUser.displayName || 'User',
