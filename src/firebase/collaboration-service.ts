@@ -1,5 +1,6 @@
 import { db } from './config';
 import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where, getDoc } from 'firebase/firestore';
+import { sendEmailNotification } from '../services/email-service';
 
 // Collaboration types
 export type CollaborationRole = 'viewer' | 'editor' | 'admin';
@@ -148,12 +149,13 @@ export const inviteCollaborator = async (collaboration: Omit<Collaboration, 'id'
     try {
       // You would implement a proper email service here
       console.log(`Invitation email sent to ${collaboration.collaboratorEmail}`);
-      // Placeholder for email notification service call
-      // await sendEmailNotification({
-      //   to: collaboration.collaboratorEmail,
-      //   subject: 'Gift Tracker Invitation',
-      //   message: `You've been invited to collaborate on Gift Tracker by ${ownerName}. ${collaboration.inviteMessage || ''}`
-      // });
+      // Real email notification service call
+      const ownerName = 'Gift Tracker Admin';
+      await sendEmailNotification({
+        to: collaboration.collaboratorEmail,
+        subject: 'Gift Tracker Invitation',
+        message: `You've been invited to collaborate on Gift Tracker by ${ownerName}. ${collaboration.inviteMessage || ''}`
+      });
     } catch (emailError) {
       console.error('Error sending invitation email:', emailError);
       // Continue despite email error

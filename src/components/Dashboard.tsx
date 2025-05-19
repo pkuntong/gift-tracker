@@ -11,6 +11,7 @@ import DashboardReminders from './DashboardReminders';
 import ReminderForm from './ReminderForm';
 import { Reminder, createReminder, getUserReminders } from '../firebase/notification-service';
 import { getAuth } from 'firebase/auth';
+import CollaboratorsPage from '../pages/CollaboratorsPage';
 
 type TabType = 'gifts' | 'events' | 'profile' | 'thank-you' | 'gift-history' | 'guests' | 
                'reminders' | 'reports' | 'wishlist' | 'collaborators' | 'dashboard';
@@ -201,38 +202,7 @@ const Dashboard: React.FC = () => {
           </div>
         );
       case 'collaborators':
-        return (
-          <div>
-            <h2 className="text-2xl font-medium mb-4">Collaborators</h2>
-            <p className="mb-6 text-gray-600">Invite friends or family to help you manage gifts, events, and reminders.</p>
-            <div className="bg-white shadow rounded-lg p-6 border border-gray-200 mb-8">
-              <h3 className="text-lg font-medium mb-2">Invite a Collaborator</h3>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="email"
-                  className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  placeholder="Enter email address... (feature coming soon)"
-                  disabled
-                />
-                <button
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-700 disabled:opacity-50"
-                  disabled
-                >
-                  Invite
-                </button>
-              </div>
-              <p className="text-xs text-gray-400 mt-2">Collaborator invitations coming soon.</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6 border border-gray-200">
-              <h3 className="text-lg font-medium mb-2">Your Collaborators</h3>
-              <ul className="list-disc ml-6 text-gray-500">
-                <li>Jane Doe (jane@example.com) [placeholder]</li>
-                <li>John Smith (john@example.com) [placeholder]</li>
-              </ul>
-              <p className="text-gray-400 mt-4">Invite others to help you manage your gift tracking and events!</p>
-            </div>
-          </div>
-        );
+        return <CollaboratorsPage />;
       case 'dashboard':
       default:
         return (
