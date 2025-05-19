@@ -9,7 +9,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import GiftManager from './components/GiftManager';
 import Profile from './components/Profile';
-import Pricing from './pages/Pricing';
+import PricingPage from './pages/PricingPage';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import Blog from './pages/Blog';
@@ -74,7 +74,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/pricing" element={<PricingPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />

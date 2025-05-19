@@ -202,6 +202,78 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Pricing Section */}
+        <div className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Pricing</h2>
+              <p className="mt-4 text-xl text-gray-600">Simple, transparent pricing for everyone. Start free, upgrade anytime.</p>
+            </div>
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-3">
+              {/* Free Plan */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg shadow-sm flex flex-col p-8">
+                <h3 className="text-lg font-semibold text-indigo-600 mb-2 text-center">Free</h3>
+                <div className="text-center">
+                  <span className="text-4xl font-extrabold text-gray-900">$0</span>
+                  <span className="text-base font-medium text-gray-500">/mo</span>
+                </div>
+                <ul className="mt-6 mb-8 space-y-3 text-gray-600 flex-1">
+                  <li>Track up to 20 gifts</li>
+                  <li>Basic reminders</li>
+                  <li>Thank you note tracking</li>
+                  <li>Email support</li>
+                </ul>
+                <button
+                  onClick={handleGetStarted}
+                  className="w-full py-2 px-4 rounded-md bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition"
+                >
+                  Get Started
+                </button>
+              </div>
+              {/* Pro Plan */}
+              <div className="bg-white border-2 border-indigo-600 rounded-lg shadow-lg flex flex-col p-8 scale-105 z-10">
+                <h3 className="text-lg font-semibold text-indigo-700 mb-2 text-center">Pro</h3>
+                <div className="text-center">
+                  <span className="text-4xl font-extrabold text-gray-900">$6</span>
+                  <span className="text-base font-medium text-gray-500">/mo</span>
+                </div>
+                <ul className="mt-6 mb-8 space-y-3 text-gray-700 flex-1">
+                  <li>Unlimited gifts</li>
+                  <li>Advanced reminders & recurring events</li>
+                  <li>Gift history & analytics</li>
+                  <li>Priority email support</li>
+                </ul>
+                <button
+                  onClick={handleGetStarted}
+                  className="w-full py-2 px-4 rounded-md bg-indigo-700 text-white font-semibold hover:bg-indigo-800 transition shadow"
+                >
+                  Start 14-Day Free Trial
+                </button>
+              </div>
+              {/* Team Plan */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg shadow-sm flex flex-col p-8">
+                <h3 className="text-lg font-semibold text-indigo-600 mb-2 text-center">Team</h3>
+                <div className="text-center">
+                  <span className="text-4xl font-extrabold text-gray-900">$15</span>
+                  <span className="text-base font-medium text-gray-500">/mo</span>
+                </div>
+                <ul className="mt-6 mb-8 space-y-3 text-gray-600 flex-1">
+                  <li>All Pro features</li>
+                  <li>Up to 5 users</li>
+                  <li>Shared wishlists & events</li>
+                  <li>Team management tools</li>
+                </ul>
+                <button
+                  onClick={() => window.location.href = '/contact'}
+                  className="w-full py-2 px-4 rounded-md bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition"
+                >
+                  Contact Sales
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Footer */}

@@ -7,7 +7,7 @@ interface MobileLayoutProps {
 }
 
 const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -84,13 +84,11 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
 
                 {/* Desktop menu (hidden on mobile) */}
                 <div className="hidden md:ml-6 md:flex md:space-x-6">
+                  <Link to="/" className={isActive('/') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}>Home</Link>
+                  <Link to="/about" className={isActive('/about') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}>About</Link>
+                  <Link to="/pricing" className={`${isActive('/pricing') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}>Pricing</Link>
                   {isAuthenticated && (
-                    <Link
-                      to="/dashboard"
-                      className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                    >
-                      Dashboard
-                    </Link>
+                    <Link to="/dashboard" className={isActive('/dashboard') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}>Dashboard</Link>
                   )}
                 </div>
               </div>
@@ -98,27 +96,18 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
               {/* Right side navigation */}
               <div className="hidden md:flex md:items-center md:ml-6">
                 {isAuthenticated ? (
-                  <div className="flex items-center">
-                    <button
-                      onClick={logout}
-                      className="logout-button mr-4 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
-                    >
-                      Logout
-                    </button>
-                    {showInstallButton && (
-                      <button
-                        onClick={handleInstallClick}
-                        className="mr-4 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
-                      >
-                        Install App
-                      </button>
-                    )}
-                    <button
-                      onClick={logout}
-                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition ease-in-out duration-150"
-                    >
-                      Logout
-                    </button>
+                  <div className="hidden sm:ml-6 sm:flex sm:items-center">
+                    <div className="ml-3 relative">
+                      <div className="flex items-center">
+                        <span className="text-gray-700 mr-4">{user?.name}</span>
+                        <button
+                          onClick={logout}
+                          className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <div className="flex space-x-4">
@@ -229,6 +218,17 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
                     Dashboard
                   </Link>
                 )}
+                <Link
+                  to="/pricing"
+                  className={`${
+                    isActive('/pricing')
+                      ? 'bg-indigo-50 border-indigo-500 text-indigo-700'
+                      : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
+                  } block pl-3 pr-4 py-2 border-l-4 text-base font-medium`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Pricing
+                </Link>
               </div>
               <div className="pt-4 pb-3 border-t border-gray-200">
                 <div className="flex items-center px-4">
@@ -324,6 +324,16 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({ children }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               <span className="text-xs mt-1">Wishlist</span>
+            </Link>
+
+            <Link
+              to="/pricing"
+              className={`flex flex-col items-center justify-center ${isActive('/pricing') ? 'text-indigo-600' : 'text-gray-500'}`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+              </svg>
+              <span className="text-xs mt-1">Pricing</span>
             </Link>
           </div>
         </div>
