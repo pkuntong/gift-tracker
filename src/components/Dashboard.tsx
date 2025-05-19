@@ -26,6 +26,19 @@ const Dashboard: React.FC = () => {
     return <Navigate to="/login" replace />;
   }
 
+  // Trial banner logic
+  let trialBanner = null;
+  if (user?.trialEnd) {
+    const daysLeft = Math.max(0, Math.ceil((new Date(user.trialEnd).getTime() - Date.now()) / (1000 * 60 * 60 * 24)));
+    if (daysLeft > 0) {
+      trialBanner = (
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+          Free trial: {daysLeft} day{daysLeft !== 1 ? 's' : ''} remaining. <Link to="/pricing" className="underline">Upgrade now</Link>
+        </div>
+      );
+    }
+  }
+
   const handleCreateReminder = async (reminderData: Partial<Reminder>) => {
     try {
       setError(null);
@@ -390,6 +403,9 @@ const Dashboard: React.FC = () => {
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           </div>
+
+          {/* Trial Banner */}
+          {trialBanner}
 
           {/* Tab content */}
           <div className="bg-white shadow rounded-lg p-6">

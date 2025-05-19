@@ -6,4 +6,6 @@ export interface User {
   updatedAt: string;
   photoURL?: string;
   emailVerified?: boolean;
+  trialStart?: string;
+  trialEnd?: string;
 } 

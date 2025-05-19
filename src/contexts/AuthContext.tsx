@@ -4,6 +4,8 @@ import { User } from '../types/user';
 import { auth } from '../firebase/config';
 import * as authService from '../firebase/auth-service';
 import { mapFirebaseUser } from '../firebase/auth-service';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 // Define types
 interface AuthContextType {
@@ -33,9 +35,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Listen for Firebase auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setIsLoading(true);
       if (firebaseUser) {
+        // Fetch user document from Firestore for trial info
+        const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+        let trialStart, trialEnd;
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          trialStart = data.trialStart;
+          trialEnd = data.trialEnd;
+        }
         // Map Firebase user to our app User type
         const mappedUser: User = {
           id: firebaseUser.uid,
@@ -43,7 +53,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           name: firebaseUser.displayName || 'User',
           createdAt: firebaseUser.metadata.creationTime || new Date().toISOString(),
           updatedAt: firebaseUser.metadata.lastSignInTime || new Date().toISOString(),
-          emailVerified: firebaseUser.emailVerified
+          emailVerified: firebaseUser.emailVerified,
+          trialStart,
+          trialEnd
         };
         setUser(mappedUser);
       } else {

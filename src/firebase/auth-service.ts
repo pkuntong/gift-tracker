@@ -16,6 +16,8 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from './config';
 import { User } from '../types/user';
 
+const TRIAL_DAYS = 14;
+
 // Type for mapping Firebase user to app user
 export const mapFirebaseUser = (firebaseUser: FirebaseUser): User => ({
   id: firebaseUser.uid,
@@ -36,11 +38,17 @@ export const signup = async (email: string, password: string, name: string): Pro
     // Update profile with display name
     await updateProfile(userCredential.user, { displayName: name });
     
+    const now = new Date();
+    const trialStart = now.toISOString();
+    const trialEnd = new Date(now.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000).toISOString();
+    
     // Create user document in Firestore
     await setDoc(doc(db, 'users', userCredential.user.uid), {
       email,
       name,
-      createdAt: new Date()
+      createdAt: now,
+      trialStart,
+      trialEnd
     });
     
     // Send email verification
