@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
     if (daysLeft > 0) {
       trialBanner = (
         <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
-          Free trial: {daysLeft} day{daysLeft !== 1 ? 's' : ''} remaining. <Link to="/pricing" className="underline">Upgrade now</Link>
+          Free trial: {Math.min(daysLeft, 7)} day{Math.min(daysLeft, 7) !== 1 ? 's' : ''} remaining. <Link to="/pricing" className="underline">Upgrade now</Link>
         </div>
       );
     }

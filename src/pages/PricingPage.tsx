@@ -10,32 +10,24 @@ const plans = [
     features: [
       'Track up to 20 gifts',
       'Basic reminders',
-      'Thank you note tracker',
+      'Thank you note tracking',
+      'Email support',
+      '7-day free trial'
     ],
     priceId: '', // No Stripe price for free
   },
   {
     name: 'Pro',
-    price: 8,
+    price: 5,
     features: [
       'Unlimited gifts',
-      'Advanced reminders',
-      'Export to CSV',
-      'Priority support',
+      'Advanced reminders & recurring events',
+      'Gift history & analytics',
+      'Priority email support',
+      'Team collaboration'
     ],
-    priceId: 'pro_price_id', // Replace with your Stripe Price ID
-  },
-  {
-    name: 'Premium',
-    price: 15,
-    features: [
-      'All Pro features',
-      'Team collaboration',
-      'Custom branding',
-      'Early access to new features',
-    ],
-    priceId: 'premium_price_id', // Replace with your Stripe Price ID
-  },
+    priceId: 'prod_SLEQ8HjKLeQFsJ', // Replace with your Stripe Price ID
+  }
 ];
 
 const PricingPage: React.FC = () => {
@@ -45,11 +37,16 @@ const PricingPage: React.FC = () => {
     setLoading(priceId);
     const stripe = await stripePromise;
     // TODO: Replace with your backend endpoint to create a Checkout Session
-    const res = await fetch(`/api/create-checkout-session`, {
+    const res = await fetch('http://localhost:4242/api/create-checkout-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ priceId }),
     });
+    if (!res.ok) {
+      console.error('Failed to create checkout session');
+      setLoading(null);
+      return;
+    }
     const session = await res.json();
     if (stripe && session.id) {
       await stripe.redirectToCheckout({ sessionId: session.id });
@@ -63,7 +60,7 @@ const PricingPage: React.FC = () => {
         <h1 className="text-4xl font-extrabold text-gray-900 mb-4">Pricing</h1>
         <p className="text-lg text-gray-600">Choose the plan that fits your needs. Upgrade or downgrade anytime.</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
         {plans.map((plan) => (
           <div key={plan.name} className="bg-white rounded-lg shadow p-8 flex flex-col items-center">
             <h2 className="text-2xl font-bold mb-2">{plan.name}</h2>

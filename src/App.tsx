@@ -5,7 +5,7 @@ import { processNotifications, requestNotificationPermission } from './firebase/
 import MobileLayout from './components/MobileLayout';
 import Home from './pages/Home';
 import Login from './components/Login';
-import Signup from './components/Signup';
+import Signup from './pages/Signup';
 import Dashboard from './components/Dashboard';
 import GiftManager from './components/GiftManager';
 import Profile from './components/Profile';

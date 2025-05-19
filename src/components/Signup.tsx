@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { FaGoogle } from 'react-icons/fa';
 
 const Signup: React.FC = () => {
   const [name, setName] = useState('');
@@ -9,7 +10,7 @@ const Signup: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const { signup } = useAuth();
+  const { signup, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -153,6 +154,40 @@ const Signup: React.FC = () => {
             </button>
           </div>
         </form>
+        {/* Social Sign Up Buttons */}
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-gray-50 text-gray-500">Or sign up with</span>
+            </div>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <button
+              type="button"
+              onClick={async () => {
+                setError('');
+                setIsLoading(true);
+                try {
+                  await loginWithGoogle();
+                  navigate('/dashboard');
+                } catch (err) {
+                  const errorMsg = err instanceof Error ? err.message : 'Unknown error';
+                  setError('Google sign-up failed: ' + errorMsg);
+                } finally {
+                  setIsLoading(false);
+                }
+              }}
+              disabled={isLoading}
+              className="w-full max-w-xs flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
+            >
+              <FaGoogle className="h-5 w-5 text-red-500 mr-2" />
+              Sign up with Google
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

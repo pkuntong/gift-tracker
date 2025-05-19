@@ -16,7 +16,6 @@ interface AuthContextType {
   signup: (email: string, password: string, name: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
-  loginWithFacebook: () => Promise<void>;
   logout: () => void;
   verifyEmail: (token: string) => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
@@ -238,23 +237,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  // Login with Facebook
-  const loginWithFacebook = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      console.log('Attempting to sign in with Facebook');
-      await authService.signInWithFacebook();
-      console.log('Facebook sign-in successful');
-      setIsLoading(false);
-    } catch (err: any) {
-      console.error('Facebook sign-in error:', err);
-      setError(err.message || 'Facebook sign-in failed');
-      setIsLoading(false);
-      throw err;
-    }
-  };
-
   // Context value
   const value = {
     user,
@@ -264,7 +246,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     signup,
     login,
     loginWithGoogle,
-    loginWithFacebook,
     logout,
     verifyEmail,
     resetPassword,

@@ -138,8 +138,8 @@ const PricingTable: React.FC<{
   const plans = [
     {
       name: 'Pro',
-      priceId: 'price_pro', // You would use actual Stripe price IDs here
-      price: '$9.99',
+      priceId: 'prod_SLEQ8HjKLeQFsJ', // You would use actual Stripe price IDs here
+      price: '$5',
       period: '/month',
       description: 'Best for regular gift givers',
       features: [
@@ -152,22 +152,9 @@ const PricingTable: React.FC<{
       ],
       highlighted: true
     },
-    {
-      name: 'Premium',
-      priceId: 'price_premium', // You would use actual Stripe price IDs here
-      price: '$19.99',
-      period: '/month',
-      description: 'For serious gift enthusiasts',
-      features: [
-        'Everything in Pro',
-        'AI gift suggestions',
-        'Collaboration features',
-        'Integration with calendars',
-        'Personalized reminders',
-        'Premium templates'
-      ]
+  
     }
-  ];
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -228,7 +215,6 @@ const ActiveSubscriptions: React.FC<{
               <div>
                 <p className="font-medium">
                   {subscription.priceId === 'price_pro' ? 'Pro Plan' : 
-                   subscription.priceId === 'price_premium' ? 'Premium Plan' : 
                    'Subscription'}
                 </p>
                 <p className="text-sm text-gray-500">

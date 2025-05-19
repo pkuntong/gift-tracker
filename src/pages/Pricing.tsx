@@ -12,49 +12,34 @@ const Pricing: React.FC = () => {
 
   const tiers = [
     {
-      name: 'Basic',
+      name: 'Free',
       price: 'Free',
       priceId: '',
       oneTimePrice: 0,
-      description: 'Perfect for getting started',
+      description: 'Try all features free for 7 days. No credit card required.',
       features: [
-        'Up to 50 gifts',
-        'Basic gift tracking',
+        'Up to 20 gifts',
+        'Basic reminders',
+        'Thank you note tracking',
         'Email support',
-        'Basic analytics'
+        '7-day free trial'
       ]
     },
     {
       name: 'Pro',
-      price: '$9.99',
-      priceId: 'price_pro', // This would be a real Stripe price ID in production
-      oneTimePrice: 9999, // $99.99 for annual payment (in cents)
+      price: '$5',
+      priceId: 'prod_SLEQ8HjKLeQFsJ', // Replace with your real Stripe price ID
+      oneTimePrice: 0, // No annual payment
       period: '/month',
-      description: 'Best for regular gift givers',
+      description: 'Unlock unlimited gifts, advanced reminders, analytics, and more.',
       features: [
         'Unlimited gifts',
-        'Advanced gift tracking',
-        'Priority support',
-        'Advanced analytics',
-        'Custom categories',
-        'Export data'
+        'Advanced reminders & recurring events',
+        'Gift history & analytics',
+        'Priority email support',
+        'Team collaboration'
       ],
       highlighted: true
-    },
-    {
-      name: 'Enterprise',
-      price: 'Custom',
-      priceId: 'price_premium', // This would be a real Stripe price ID in production
-      oneTimePrice: 19999, // $199.99 for annual payment (in cents)
-      description: 'For large organizations',
-      features: [
-        'Everything in Pro',
-        'Custom integrations',
-        'Dedicated support',
-        'Team collaboration',
-        'Custom branding',
-        'API access'
-      ]
     }
   ];
 
@@ -202,7 +187,7 @@ const Pricing: React.FC = () => {
 
         <div className="mt-12 text-center">
           <p className="text-base text-gray-500">
-            Need a custom plan?{' '}
+            Have questions?{' '}
             <Link to="/contact" className="text-indigo-600 hover:text-indigo-500">
               Contact us
             </Link>
