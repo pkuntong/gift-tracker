@@ -7,7 +7,6 @@ import {
   confirmPasswordReset,
   updateProfile,
   GoogleAuthProvider,
-  FacebookAuthProvider,
   signInWithPopup,
   User as FirebaseUser,
   UserCredential 
@@ -126,26 +125,25 @@ export const signInWithGoogle = async (): Promise<User> => {
   }
 };
 
-// Sign in with Facebook
-export const signInWithFacebook = async (): Promise<User> => {
-  try {
-    const provider = new FacebookAuthProvider();
-    const result = await signInWithPopup(auth, provider);
+// // Sign in with Facebook
+// export const signInWithFacebook = async (): Promise<User> => {
+//   try {
+//     const result = await signInWithPopup(auth, provider);
     
-    // Check if user exists in Firestore, if not create a new user document
-    const userDoc = await getDoc(doc(db, 'users', result.user.uid));
-    if (!userDoc.exists()) {
-      await setDoc(doc(db, 'users', result.user.uid), {
-        email: result.user.email,
-        name: result.user.displayName || 'Facebook User',
-        photoURL: result.user.photoURL,
-        createdAt: new Date()
-      });
-    }
+//     // Check if user exists in Firestore, if not create a new user document
+//     const userDoc = await getDoc(doc(db, 'users', result.user.uid));
+//     if (!userDoc.exists()) {
+//       await setDoc(doc(db, 'users', result.user.uid), {
+//         email: result.user.email,
+//         name: result.user.displayName || 'Facebook User',
+//         photoURL: result.user.photoURL,
+//         createdAt: new Date()
+//       });
+//     }
     
-    return mapFirebaseUser(result.user);
-  } catch (error) {
-    console.error('Error signing in with Facebook:', error);
-    throw error;
-  }
-};
+//     return mapFirebaseUser(result.user);
+//   } catch (error) {
+//     console.error('Error signing in with Facebook:', error);
+//     throw error;
+//   }
+// };
