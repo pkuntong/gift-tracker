@@ -138,7 +138,7 @@ const PricingTable: React.FC<{
   const plans = [
     {
       name: 'Pro',
-      priceId: 'prod_SLEQ8HjKLeQFsJ', // You would use actual Stripe price IDs here
+      priceId: 'price_1RQx6HRp30Oo5mnQSRfohJ5g', // <-- Replace with your actual Stripe Price ID
       price: '$5',
       period: '/month',
       description: 'Best for regular gift givers',

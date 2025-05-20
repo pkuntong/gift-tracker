@@ -26,7 +26,7 @@ const plans = [
       'Priority email support',
       'Team collaboration'
     ],
-    priceId: 'prod_SLEQ8HjKLeQFsJ', // Replace with your Stripe Price ID
+    priceId: 'price_1RQx6HRp30Oo5mnQSRfohJ5g', // Replace with your Stripe Price ID
   }
 ];
 

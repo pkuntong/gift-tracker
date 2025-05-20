@@ -5,6 +5,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+// Debug stripe key
+console.log('STRIPE_SECRET_KEY:', process.env.STRIPE_SECRET_KEY);
+
+// Add error handling for undefined key
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('STRIPE_SECRET_KEY is not defined in environment variables');
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2022-11-15' });
 
 app.use(cors());
