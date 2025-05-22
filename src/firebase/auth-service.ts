@@ -9,7 +9,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   User as FirebaseUser,
-  UserCredential 
+  UserCredential,
+  updateEmail as fbUpdateEmail
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from './config';
@@ -147,3 +148,9 @@ export const signInWithGoogle = async (): Promise<User> => {
 //     throw error;
 //   }
 // };
+
+export const updateEmail = async (email: string): Promise<void> => {
+  const currentUser = auth.currentUser;
+  if (!currentUser) throw new Error('No authenticated user');
+  await fbUpdateEmail(currentUser, email);
+};

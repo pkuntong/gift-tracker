@@ -4,7 +4,7 @@ import { User } from '../types/user';
 import { auth } from '../firebase/config';
 import * as authService from '../firebase/auth-service';
 import { mapFirebaseUser } from '../firebase/auth-service';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 // Define types
@@ -21,6 +21,7 @@ interface AuthContextType {
   resetPassword: (email: string) => Promise<void>;
   updatePassword: (token: string, password: string) => Promise<void>;
   updateProfile: (name: string) => Promise<void>;
+  updateEmail: (email: string) => Promise<void>;
 }
 
 // Create context
@@ -211,10 +212,47 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(true);
     setError(null);
     try {
+      // Update Firebase Auth display name
       await authService.updateUserProfile(name);
+
+      // Update Firestore user document
+      if (user) {
+        const userRef = doc(db, 'users', user.id);
+        await updateDoc(userRef, { name });
+        // Reload user from Firestore
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          setUser({ ...user, name: userDoc.data().name });
+        }
+      }
       setIsLoading(false);
     } catch (err: any) {
       setError(err.message || 'Profile update failed');
+      setIsLoading(false);
+      throw err;
+    }
+  };
+
+  // Update user email
+  const updateEmail = async (email: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // Update Firebase Auth email
+      await authService.updateEmail(email);
+      // Update Firestore user document
+      if (user) {
+        const userRef = doc(db, 'users', user.id);
+        await updateDoc(userRef, { email });
+        // Reload user from Firestore
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          setUser({ ...user, email: userDoc.data().email });
+        }
+      }
+      setIsLoading(false);
+    } catch (err: any) {
+      setError(err.message || 'Email update failed');
       setIsLoading(false);
       throw err;
     }
@@ -250,7 +288,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     verifyEmail,
     resetPassword,
     updatePassword,
-    updateProfile
+    updateProfile,
+    updateEmail
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

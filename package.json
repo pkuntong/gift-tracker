@@ -21,6 +21,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
+    "@stagewise/toolbar-react": "^0.1.2",
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.3.0",
     "@types/papaparse": "^5.3.16",

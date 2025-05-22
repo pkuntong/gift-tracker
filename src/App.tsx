@@ -29,6 +29,8 @@ import RemindersPage from './pages/RemindersPage';
 import ReportsPage from './pages/ReportsPage';
 import WishlistPage from './pages/WishlistPage';
 import CollaboratorsPage from './pages/CollaboratorsPage';
+import { StagewiseToolbar } from './components/StagewiseToolbar';
+import Settings from './pages/Settings';
 
 // Import your page components here
 // import Home from '@/pages/Home';
@@ -70,10 +72,12 @@ const App: React.FC = () => {
     <Router>
       <AuthProvider>
         <MobileLayout>
+          {process.env.NODE_ENV === 'development' && <StagewiseToolbar />}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/register" element={<Signup />} />
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
@@ -178,6 +182,14 @@ const App: React.FC = () => {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/cookies" element={<CookiePolicy />} />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
+                </PrivateRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MobileLayout>
