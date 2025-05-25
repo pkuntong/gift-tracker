@@ -63,13 +63,27 @@ const Profile: React.FC = () => {
             required
           />
         </div>
-        <button
-          type="submit"
-          className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition"
-          disabled={loading}
-        >
-          {loading ? 'Saving...' : 'Save Changes'}
-        </button>
+        <div className="flex justify-end space-x-2">
+          <button
+            type="button"
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            onClick={() => {
+              setName(user?.name || '');
+              setEmail(user?.email || '');
+              setMessage('');
+              setError('');
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition"
+            disabled={loading}
+          >
+            {loading ? 'Saving...' : 'Save Changes'}
+          </button>
+        </div>
       </form>
     </div>
   );

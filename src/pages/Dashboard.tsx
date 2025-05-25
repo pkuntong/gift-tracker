@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import GiftManager from '../components/GiftManager';
 import Navigation from '../components/Navigation';
 import DashboardReminders from '../components/DashboardReminders';
+import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { Timestamp } from 'firebase/firestore';
+import WishlistPage from './WishlistPage';
 
 // Import or create placeholder components for different tabs
 // These are temporary placeholders - you should replace with actual components
@@ -72,6 +76,34 @@ const UserProfile: React.FC = () => (
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [gifts, setGifts] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (!user) return;
+    const q = query(
+      collection(db, 'gifts'),
+      where('userId', '==', user.id),
+      orderBy('createdAt', 'desc')
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setGifts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    });
+    return () => unsubscribe();
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+    const q = query(
+      collection(db, 'events'),
+      where('userId', '==', user.id),
+      orderBy('date', 'asc')
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setEvents(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    });
+    return () => unsubscribe();
+  }, [user]);
 
   // Function to render content based on active tab
   const renderTabContent = () => {
@@ -91,7 +123,7 @@ const Dashboard: React.FC = () => {
       case 'reports':
         return <Reports />;
       case 'wishlist':
-        return <Wishlist />;
+        return <WishlistPage />;
       case 'collaborators':
         return <Collaborators />;
       case 'profile':
@@ -109,13 +141,41 @@ const Dashboard: React.FC = () => {
               
               {/* Additional dashboard cards can be added here */}
               <div className="bg-white shadow rounded-lg p-6 border border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Gifts</h3>
-                <p className="text-gray-500">Your recent gift activity will appear here.</p>
+                <h2 className="text-xl font-bold mb-4">Recent Gifts</h2>
+                {gifts.length === 0 ? (
+                  <div>Your recent gift activity will appear here.</div>
+                ) : (
+                  <ul className="divide-y divide-gray-100">
+                    {gifts.map(gift => (
+                      <li key={gift.id} className="py-2">
+                        <span className="font-medium">{gift.name}</span>
+                        {/* Add more gift details here if needed */}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
               
               <div className="bg-white shadow rounded-lg p-6 border border-gray-200">
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Upcoming Events</h3>
-                <p className="text-gray-500">Your upcoming events will appear here.</p>
+                {events.length === 0 ? (
+                  <p className="text-gray-500">Your upcoming events will appear here.</p>
+                ) : (
+                  <ul className="divide-y divide-gray-100">
+                    {events.map(event => (
+                      <li key={event.id} className="py-2">
+                        <span className="font-medium">{event.name}</span>
+                        {event.date && (
+                          <span className="ml-2 text-gray-500 text-sm">
+                            {event.date instanceof Timestamp
+                              ? event.date.toDate().toLocaleDateString()
+                              : new Date(event.date).toLocaleDateString()}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           </div>
