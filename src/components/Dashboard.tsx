@@ -14,47 +14,10 @@ import GiftHistoryPage from '../pages/GiftHistoryPage';
 import ThankYouTrackerPage from '../pages/ThankYouTrackerPage';
 import EventManager from '../components/EventManager';
 
-// Placeholder components for tabs
-const ThankYouTracker: React.FC = () => (
-  <div>
-    <h2 className="text-2xl font-medium mb-4">Thank You Tracker</h2>
-    <p>Track your thank you notes here.</p>
-  </div>
-);
-const GiftHistory: React.FC = () => (
-  <div>
-    <h2 className="text-2xl font-medium mb-4">Gift History</h2>
-    <p>View your gift history here.</p>
-  </div>
-);
-const GuestManager: React.FC = () => (
-  <div>
-    <h2 className="text-2xl font-medium mb-4">Guest Management</h2>
-    <p>Manage your guests here.</p>
-  </div>
-);
 const Reminders: React.FC = () => (
   <div>
     <h2 className="text-2xl font-medium mb-4">Reminders</h2>
     <DashboardReminders />
-  </div>
-);
-const Reports: React.FC = () => (
-  <div>
-    <h2 className="text-2xl font-medium mb-4">Reports</h2>
-    <p>View your reports here.</p>
-  </div>
-);
-const Collaborators: React.FC = () => (
-  <div>
-    <h2 className="text-2xl font-medium mb-4">Collaborators</h2>
-    <p>Manage your collaborators here.</p>
-  </div>
-);
-const UserProfile: React.FC = () => (
-  <div>
-    <h2 className="text-2xl font-medium mb-4">User Profile</h2>
-    <p>Manage your profile here.</p>
   </div>
 );
 
@@ -110,8 +73,6 @@ const Dashboard: React.FC = () => {
         return <WishlistPage />;
       case 'collaborators':
         return <CollaboratorsPage />;
-      case 'profile':
-        return <UserProfile />;
       default:
         return (
           <div>
