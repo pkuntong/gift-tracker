@@ -52,13 +52,6 @@ const Reports: React.FC = () => (
   </div>
 );
 
-const Wishlist: React.FC = () => (
-  <div>
-    <h2 className="text-2xl font-medium mb-4">Wishlist</h2>
-    <p>Manage your wishlist here.</p>
-  </div>
-);
-
 const Collaborators: React.FC = () => (
   <div>
     <h2 className="text-2xl font-medium mb-4">Collaborators</h2>

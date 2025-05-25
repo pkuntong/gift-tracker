@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { StagewiseToolbar as Toolbar } from '@stagewise/toolbar-react';
 import { createRoot } from 'react-dom/client';
 
