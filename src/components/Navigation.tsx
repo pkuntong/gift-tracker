@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface NavigationProps {
   activeTab: string;
@@ -8,6 +9,7 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   // Function to check if a tab is active
   const isActive = (tab: string) => activeTab === tab;
@@ -23,7 +25,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
       {/* Logo Section */}
       <div className="py-6 px-4 border-b border-gray-200">
         <span 
-          onClick={handleTabClick('dashboard')} 
+          onClick={() => navigate('/')}
           className="text-xl font-bold text-indigo-600 cursor-pointer"
         >
           Gift Tracker

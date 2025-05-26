@@ -13,6 +13,7 @@ import GuestManagerPage from '../pages/GuestManagerPage';
 import GiftHistoryPage from '../pages/GiftHistoryPage';
 import ThankYouTrackerPage from '../pages/ThankYouTrackerPage';
 import EventManager from '../components/EventManager';
+import { Link } from 'react-router-dom';
 
 const Reminders: React.FC = () => (
   <div>

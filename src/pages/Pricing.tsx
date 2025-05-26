@@ -28,7 +28,7 @@ const Pricing: React.FC = () => {
     {
       name: 'Pro',
       price: '$5',
-      priceId: 'price_1RQx6HRp30Oo5mnQSRfohJ5g', // Replace with your real Stripe price ID
+      priceId: 'price_1RQx6HRp30Oo5mnQSRfohJ5g', // TODO: Replace with your actual Stripe Price ID from the Stripe Dashboard
       oneTimePrice: 0, // No annual payment
       period: '/month',
       description: 'Unlock unlimited gifts, advanced reminders, analytics, and more.',

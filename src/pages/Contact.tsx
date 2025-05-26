@@ -55,10 +55,10 @@ const Contact: React.FC = () => {
           
           <div className="mb-6">
             <h3 className="text-lg font-medium mb-2">Email</h3>
-            <p className="text-indigo-600">support@gifttracker.com</p>
+            {/* <p className="text-indigo-600">support@gifttracker.com</p> */}
           </div>
           
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h3 className="text-lg font-medium mb-2">Address</h3>
             <p className="text-gray-600">
               Gift Tracker<br />
@@ -66,7 +66,7 @@ const Contact: React.FC = () => {
               Suite 100<br />
               San Francisco, CA 94105
             </p>
-          </div>
+          </div> */}
           
           <div>
             <h3 className="text-lg font-medium mb-2">Business Hours</h3>

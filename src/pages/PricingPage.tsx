@@ -35,23 +35,39 @@ const PricingPage: React.FC = () => {
 
   const handleSubscribe = async (priceId: string) => {
     setLoading(priceId);
-    const stripe = await stripePromise;
-    // TODO: Replace with your backend endpoint to create a Checkout Session
-    const res = await fetch('http://localhost:4242/api/create-checkout-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priceId }),
-    });
-    if (!res.ok) {
-      console.error('Failed to create checkout session');
+    try {
+      const stripe = await stripePromise;
+      if (!stripe) {
+        throw new Error('Stripe failed to initialize');
+      }
+
+      // Create a checkout session
+      const response = await fetch('http://localhost:3001/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ priceId }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const { sessionId } = await response.json();
+      
+      // Redirect to Stripe Checkout
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+      
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      alert('Failed to start subscription. Please try again.');
+    } finally {
       setLoading(null);
-      return;
     }
-    const session = await res.json();
-    if (stripe && session.id) {
-      await stripe.redirectToCheckout({ sessionId: session.id });
-    }
-    setLoading(null);
   };
 
   return (
