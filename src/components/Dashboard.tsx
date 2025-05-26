@@ -130,6 +130,12 @@ const Dashboard: React.FC = () => {
       <div className="flex-1 ml-64">
         <main className="max-w-6xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <div className="py-6">
+            {/* Top bar navigation */}
+            <div className="flex items-center space-x-6 mb-8">
+              <Link to="/" className="text-gray-700 hover:text-indigo-600 font-medium">Home</Link>
+              <Link to="/about" className="text-gray-700 hover:text-indigo-600 font-medium">About</Link>
+              <Link to="/pricing" className="text-gray-700 hover:text-indigo-600 font-medium">Pricing</Link>
+            </div>
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900">
                 {activeTab === 'dashboard' ? 'Dashboard' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
